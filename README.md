@@ -52,60 +52,60 @@
 владельцами курсов. Только владелец курса может включить другого пользователя в список студентов того или иного потока своего курса.
 
 #### Сущность (коллекция) Курс
-{
-    _id
-    "Name": string
-    "Owner": ObjectId
-    "State": enum: ["Pending", "Active", "Retired"]
-    "Lessons": [
-        {
-            _id
-            "Theme": string
-            "Purpose": string
-            "Duration": int
-            "Materials": [
-                {
-                    _id
-                    "Title": string
-                    "Type": enum: ["Link", "File", "Video"]
-                    "Source": string
-                },
-            ]
-        },
-    ]
-}
+    {
+        _id
+        "Name": string
+        "Owner": ObjectId
+        "State": enum: ["Pending", "Active", "Retired"]
+        "Lessons": [
+            {
+                _id
+                "Theme": string
+                "Purpose": string
+                "Duration": int
+                "Materials": [
+                    {
+                        _id
+                        "Title": string
+                        "Type": enum: ["Link", "File", "Video"]
+                        "Source": string
+                    },
+                ]
+            },
+        ]
+    }
 
 #### Сущность (коллекция) Поток
-{
-    _id
-    "Name": string
-    "Owner": ObjectId
-    "State": enum: ["Pending", "Active", "Closed"]
-    "Start": Date
-    "Finish": Date
-    "Lessons": [
-        {
-            _id
-            "Theme": string
-            "Purpose": string
-            "DueDate": Date
-            "Materials": [
-                {
-                    _id
-                    "Title": string
-                    "Type": enum: ["Link", "File", "Video"]
-                    "Source": string
-                },
-            ],
-            "Comments": [
+    {
+        _id
+        "Name": string
+        "Owner": ObjectId
+        "State": enum: ["Pending", "Active", "Closed"]
+        "Start": Date
+        "Finish": Date
+        "Lessons": [
+            {
                 _id
-                "TimeStamp": Date
-                "UserID": ObjectId
-                "Text": string
-            ]
-        },
-    ]
-}
+                "Theme": string
+                "Purpose": string
+                "DueDate": Date
+                "Materials": [
+                    {
+                        _id
+                        "Title": string
+                        "Type": enum: ["Link", "File", "Video"]
+                        "Source": string
+                    },
+                ],
+                "Comments": [
+                    _id
+                    "TimeStamp": Date
+                    "UserID": ObjectId
+                    "Text": string
+                ]
+            },
+        ]
+    }
 
 #### Сущность (коллекция) Пользователь
     {
