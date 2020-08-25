@@ -1,0 +1,28 @@
+{
+  "name": "my-courses",
+  "version": "1.0.0",
+  "description": "Данное приложение является учебным и разрабатывается в рамках курса Разработчик Node.js образовательной компании [OTUS](https://otus.ru/).",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kiselb/my-courses.git"
+  },
+  "author": "Mikhail V. Kiselev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kiselb/my-courses/issues"
+  },
+  "homepage": "https://github.com/Kiselb/my-courses#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "jest": "^26.4.2",
+    "nodemon": "^2.0.4"
+  }
+}
