@@ -80,6 +80,7 @@
         _id
         "Name": string
         "Owner": ObjectId
+        "CourseId": ObjectId
         "State": enum: ["Pending", "Active", "Closed"]
         "Start": Date
         "Finish": Date
