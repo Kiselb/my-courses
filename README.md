@@ -108,9 +108,9 @@
 }
 
 #### Сущность (коллекция) Пользователь
-{
-    _id
-    "Name": string
-    "email": string
-    "Password": string
-}
+    {
+        _id
+        "Name": string
+        "email": string
+        "Password": string
+    }
