@@ -7,3 +7,18 @@ GET http://localhost:5000/streams/active HTTP/1.1
 GET http://localhost:5000/streams/archive HTTP/1.1
 
 ###
+GET http://localhost:5000/users HTTP/1.1
+
+###
+POST http://localhost:5000/users HTTP/1.1
+
+###
+POST http://localhost:5000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Ivan Ivanov",
+    "password": "12345"
+}
+
+###
