@@ -8,6 +8,7 @@ GET http://localhost:5000/streams/archive HTTP/1.1
 
 ###
 GET http://localhost:5000/users HTTP/1.1
+Cookie: token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg0NjIwOTksImV4cCI6MjA3ODQ2MjA5OSwic3ViIjoiNWY0NTE4MzVhNzIwYjc1ZWM0MDYyZWI0In0.RsW_EBid7RkdpFfs7CUTSjd9xQw51_vtR92wTdcZtcbXAGGJxup0bg0qYLjUmghM8h0fh_gkmhax24j-1Npiit_r0jf5ZP-VCFQF1lUZJGvG-21hmnxedXaO-D-saiWJzdodMNmMBFUrC5jbRnUKbWmEi6zoY4PtHngFqczkRnc; Path=/; HttpOnly; Secure
 
 ###
 POST http://localhost:5000/users HTTP/1.1
@@ -22,3 +23,4 @@ content-type: application/json
 }
 
 ###
+POST http://localhost:5000/Logout HTTP/1.1
