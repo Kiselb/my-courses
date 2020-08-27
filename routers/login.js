@@ -4,8 +4,7 @@ const auth = require('./auth')
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    console.log('Render Login Page')
-    res.sendStatus(200)
+    res.render('login', {})
 })
 router.post('/', async (req, res) => {
     if (!req.body.name || !req.body.password) {

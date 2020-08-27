@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    .main
+        .logo
+            a(href="/") Проект my-courses
+        .menu
+            a(href='/courses').menu-item Мои Курсы
+            a(href='/streams').menu-item Мои Потоки
+            a(href='/login').menu-item Войти
+            a(href='/logout' onclick='mycourses.logout()').menu-item Выйти
+            a(href='/chat').menu-item Чат
+            a#user(href='').menu-item
+        block login

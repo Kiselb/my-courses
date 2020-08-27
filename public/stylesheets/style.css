@@ -1,0 +1,57 @@
+html {
+    background-color: #fff;
+}
+.main {
+    width: 1100px;
+    height: 100vh;
+    margin: 0 auto;
+    display: grid;
+    grid-template-areas:
+        "logo"
+        "menu"
+        "content";
+    grid-template-rows: 4em 2em auto;
+    grid-template-columns: 1fr;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #FAFAFA;
+}
+.logo {
+    grid-area: logo;
+    background-color: #777777;
+    line-height: 4em;
+}
+.logo a {
+    color: azure;
+    font-size: 2.85em;
+    text-decoration: none;
+}
+.menu {
+    grid-area: menu;
+    background-color: #ECECEC;
+}
+.menu-item {
+    color: black;
+    font-size: 0.85em;
+    text-decoration: none;
+    line-height: 2em;
+    margin-left: 1em;
+}
+.menu-item:hover {
+    color:#FCAC45
+}
+.login {
+    grid-area: content;
+    width: 13em;
+}
+.login input {
+    display: block;
+    width: 13em;
+    margin-left: 2em;
+    margin-top: 0.75em;
+}
+.login button {
+    display: block;
+    width: 13em;
+    margin-left: 2em;
+    margin-top: 0.75em;
+}

@@ -14,7 +14,10 @@ Cookie: token=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg0NjIwOTksImV4c
 POST http://localhost:5000/users HTTP/1.1
 
 ###
-POST http://localhost:5000/Login HTTP/1.1
+GET http://localhost:5000/login HTTP/1.1
+
+###
+POST http://localhost:5000/login HTTP/1.1
 content-type: application/json
 
 {
@@ -23,4 +26,4 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:5000/Logout HTTP/1.1
+POST http://localhost:5000/logout HTTP/1.1

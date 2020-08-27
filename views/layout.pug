@@ -1,0 +1,8 @@
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/public/stylesheets/cssreset.css')
+    link(rel='stylesheet', href='/public/stylesheets/style.css')
+    script(src='/public/javascripts/main.js')
+  body(onload="mycourses.bodyOnLoad()")
+    block content
