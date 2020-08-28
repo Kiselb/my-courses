@@ -29,7 +29,8 @@ app.use((req, res, next) => {
 })
 app.use(['/courses', '/streams'], (req, res, next) => {
     console.log(req.originalUrl)
-    if (auth.verify(req.cookies["token"])) {
+    console.log('Cookie: ', req.cookies["mycoursestoken"])
+    if (auth.verify(req.cookies["mycoursestoken"])) {
         next()
     } else { 
         res.sendStatus(401)

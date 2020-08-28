@@ -12,7 +12,8 @@ router.post('/', async (req, res) => {
     } else {
         const token = await auth.login(req.body.name, req.body.password)
         if (!!token) {
-            res.cookie('token', token, { httpOnly: true, secure: true})
+            res.cookie('mycoursestoken', token, { httpOnly: true }) //, secure: true})
+            console.log(token)
             res.sendStatus(200)
         } else {
             res.sendStatus(401)

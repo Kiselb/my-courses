@@ -4,7 +4,7 @@ const auth = require('./auth')
 const router = express.Router()
 
 router.post('/', (req, res) => {
-    res.clearCookie('token', { httpOnly: true, secure: true})
+    res.clearCookie('mycoursestoken', { httpOnly: true}) //, secure: true})
     //res.render('index', {})
     res.sendStatus(200)
 })

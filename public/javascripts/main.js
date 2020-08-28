@@ -13,14 +13,14 @@ var mycourses = (function() {
         if (!name || !password) return;
     
         const request = new XMLHttpRequest();
-        request.open('POST', "http://localhost:5000/login");
-        request.setRequestHeader('Content-Type', 'application/json');
+        request.open('POST', "http://127.0.0.1:5000/login");
+        request.setRequestHeader('content-type', 'application/json');
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
                 localStorage.setItem('mycourses.user', name);
                 const displayName = document.getElementById('user');
                 displayName.innerText = name;
-                window.location.href = 'http://localhost:5000/'
+                window.location.href = 'http://127.0.0.1:5000/'
             } else if (request.readyState === 4 && request.status === 401) {
                 localStorage.setItem('mycourses.user', "");
                 const displayName = document.getElementById('name');
@@ -31,12 +31,12 @@ var mycourses = (function() {
     }
     var logout = function() {
         const request = new XMLHttpRequest();
-        request.open('POST', "http://localhost:5000/logout");
+        request.open('POST', "http://127.0.0.1:5000/logout");
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
                 localStorage.setItem('mycourses.user', "");
-                window.location.href = 'http://localhost:5000/'
+                window.location.href = 'http://127.0.0.1:5000/'
             }
         });
         request.send('{}');
