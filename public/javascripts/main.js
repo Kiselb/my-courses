@@ -5,6 +5,21 @@ var mycourses = (function() {
     var bodyOnLoad = function() {
         const displayName = document.getElementById('user');
         displayName.innerText = localStorage.getItem('mycourses.user') || "";
+        if (!!localStorage.getItem('mycourses.userId')) {
+            document.getElementById("menuitem03").classList.remove('menu-item-toggle');
+            document.getElementById("menuitem04").classList.remove('menu-item-toggle');
+            document.getElementById("menuitem05").classList.add('menu-item-toggle');
+            document.getElementById("menuitem06").classList.remove('menu-item-toggle');
+            document.getElementById("menuitem07").classList.remove('menu-item-toggle');
+            document.getElementById("user").classList.remove('menu-item-toggle');
+        } else {
+            document.getElementById("menuitem03").classList.add('menu-item-toggle');
+            document.getElementById("menuitem04").classList.add('menu-item-toggle');
+            document.getElementById("menuitem05").classList.remove('menu-item-toggle');
+            document.getElementById("menuitem06").classList.add('menu-item-toggle');
+            document.getElementById("menuitem07").classList.add('menu-item-toggle');
+            document.getElementById("user").classList.add('menu-item-toggle');
+        }
     }
     var login = function() {
         const name = document.getElementById('name').value;
@@ -18,13 +33,22 @@ var mycourses = (function() {
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
                 localStorage.setItem('mycourses.user', name);
-                const displayName = document.getElementById('user');
-                displayName.innerText = name;
+                localStorage.setItem('mycourses.userId', JSON.parse(request.response).userId);
+
+                document.getElementById('user').innerText = name;
+
                 window.location.href = 'http://127.0.0.1:5000/'
             } else if (request.readyState === 4 && request.status === 401) {
                 localStorage.setItem('mycourses.user', "");
-                const displayName = document.getElementById('name');
-                displayName.innerText = "";
+                localStorage.setItem('mycourses.userId', "");
+
+                document.getElementById('name').innerText = "";
+                document.getElementById("menuitem03").classList.add('menu-item-toggle');
+                document.getElementById("menuitem04").classList.add('menu-item-toggle');
+                document.getElementById("menuitem05").classList.remove('menu-item-toggle');
+                document.getElementById("menuitem06").classList.add('menu-item-toggle');
+                document.getElementById("menuitem07").classList.add('menu-item-toggle');
+                document.getElementById("user").classList.add('menu-item-toggle');
             }
         });
         request.send('{ "name": "' + name + '", "password": "' + password +'" }');
@@ -36,6 +60,7 @@ var mycourses = (function() {
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
                 localStorage.setItem('mycourses.user', "");
+                localStorage.setItem('mycourses.userId', "");
                 window.location.href = 'http://127.0.0.1:5000/'
             }
         });

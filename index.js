@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
 const auth = require('./routers/auth')
+const routersActive = require('./routers/active.js')
 const routersCourses = require('./routers/courses.js')
 const routersStreams = require('./routers/streams.js')
 const routersUsers = require('./routers/users.js')
@@ -40,6 +41,7 @@ app.use(['/courses', '/streams'], (req, res, next) => {
 app.get('/', (req, res, next) => {
     res.render('index', {})
 })
+app.use('/active', routersActive)
 app.use('/courses', routersCourses)
 app.use('/streams', routersStreams)
 app.use('/users', routersUsers)

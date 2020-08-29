@@ -40,6 +40,9 @@ html {
 .menu-item:hover {
     color:#FCAC45
 }
+.menu-item-toggle {
+    display: none;
+}
 .login {
     grid-area: content;
     width: 13em;

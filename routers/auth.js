@@ -5,8 +5,8 @@ const RSA_KEYS = require('./rsakeys.js')
 
 exports.verify = (token) => {
     if (!!token) {
-        const user = jwt.verify(token, RSA_KEYS.RSA_PUBLIC_KEY).sub
-        if (!!user) return user
+        const userId = jwt.verify(token, RSA_KEYS.RSA_PUBLIC_KEY).sub
+        if (!!userId) return userId
     }
     return null
 }
@@ -22,7 +22,7 @@ exports.login = async (name, password) => {
             expiresIn: 480000000,
             subject: '' + userId._id
         })
-        return token
+        return ({ token: token, userId: '' + userId._id })
     }
     return null
 }

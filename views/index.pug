@@ -5,10 +5,12 @@ block content
         .logo
             a(href="/") Проект my-courses
         .menu
-            a(href='/courses').menu-item Мои Курсы
-            a(href='/streams').menu-item Мои Потоки
-            a(href='/login').menu-item Войти
-            a(href='/logout' onclick='mycourses.logout()').menu-item Выйти
-            a(href='/chat').menu-item Чат
-            a#user(href='').menu-item
+            a#menuitem01(href='/active/courses').menu-item Курсы
+            a#menuitem02(href='/active/streams').menu-item Потоки
+            a#menuitem03(href='/courses' class='menu-item-toogle').menu-item Мои Курсы
+            a#menuitem04(href='/streams' class='menu-item-toogle').menu-item Мои Потоки
+            a#menuitem05(href='/login').menu-item Войти
+            a#menuitem06(href='' onclick='mycourses.logout()' class='menu-item-toogle').menu-item Выйти
+            a#menuitem07(href='/chat' class='menu-item-toogle').menu-item Чат
+            a#user(href='' class='menu-item-toogle').menu-item
         block panel

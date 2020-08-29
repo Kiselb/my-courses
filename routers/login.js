@@ -11,10 +11,10 @@ router.post('/', async (req, res) => {
         res.sendStatus(401)
     } else {
         const token = await auth.login(req.body.name, req.body.password)
-        if (!!token) {
-            res.cookie('mycoursestoken', token, { httpOnly: true }) //, secure: true})
-            console.log(token)
-            res.sendStatus(200)
+        if (!!token.token) {
+            res.cookie('mycoursestoken', token.token, { httpOnly: true }) //, secure: true})
+            console.log(token.token)
+            res.status(200).send({ userId: token.userId })
         } else {
             res.sendStatus(401)
         }

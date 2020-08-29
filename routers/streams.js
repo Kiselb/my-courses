@@ -1,9 +1,6 @@
 const express = require('express')
 const router = express.Router()
 
-router.get('/active', (req, res) => {
-    res.sendStatus(200)
-})
 router.get('/archive', (req, res) => {
     res.sendStatus(200)
 })
