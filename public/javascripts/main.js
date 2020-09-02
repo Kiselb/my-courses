@@ -69,10 +69,23 @@ var mycourses = (function() {
     var islogged = function() {
         return !!localStorage.getItem('mycourses.user');
     }
+    var signupStream = function(streamId) {
+        console.log('StreamID: ', streamId);
+        const request = new XMLHttpRequest();
+        request.open('POST', "http://127.0.0.1:5000/streams/" + streamId + "/students");
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.addEventListener("readystatechange", () => {
+            if (request.readyState === 4 && request.status === 200) {
+                //window.location.href = 'http://127.0.0.1:5000/'
+            }
+        });
+        request.send('{}');
+    }
     return {
         login: login,
         logout: logout,
         islogged: islogged,
-        bodyOnLoad: bodyOnLoad
+        bodyOnLoad: bodyOnLoad,
+        signupStream: signupStream
     };
 })();

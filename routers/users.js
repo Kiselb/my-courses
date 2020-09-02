@@ -26,11 +26,11 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     res.sendStatus(200)
 })
-router.get('/courses', (req, res) => {
-    res.sendStatus(200)
-})
-router.get('/streams', (req, res) => {
-    res.sendStatus(200)
-})
+// router.get('/courses', (req, res) => {
+//     res.sendStatus(200)
+// })
+// router.get('/streams', (req, res) => {
+//     res.sendStatus(200)
+// })
 
 module.exports = router

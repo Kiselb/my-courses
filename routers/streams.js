@@ -1,6 +1,11 @@
 const express = require('express')
 const router = express.Router()
 
+const controllers = require('../controllers/streams.js')
+
+router.get('/active', (req, res) => {
+    res.sendStatus(200)
+})
 router.get('/archive', (req, res) => {
     res.sendStatus(200)
 })
@@ -14,7 +19,8 @@ router.get('/:id/students', (req, res) => {
     res.sendStatus(200)
 })
 router.post('/:id/students', (req, res) => {
-    res.sendStatus(200)
+    //res.sendStatus(200)
+    controllers.subscribeOnStream(req, res)
 })
 router.get('/lessons/:id', (req, res) => {
     res.sendStatus(200)
