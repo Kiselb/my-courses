@@ -17,7 +17,7 @@ html {
 }
 .logo {
     grid-area: logo;
-    background-color: #777777;
+    background-color: #7152D9;
     line-height: 4em;
 }
 .logo a {
@@ -32,7 +32,7 @@ html {
 }
 .menu-item {
     color: black;
-    font-size: 0.85em;
+    font-size: 1em;
     text-decoration: none;
     line-height: 2em;
     margin-left: 1em;
@@ -70,6 +70,11 @@ html {
     padding: 2em;
     box-sizing: border-box;
 }
+.activecourses p {
+    font-size: 2em;
+    color: cornflowerblue;
+    padding-bottom: 1em;
+}
 .activecourses-item {
     display: grid;
     grid-template-areas:
@@ -85,10 +90,25 @@ html {
     grid-area: name;
     font-size: 2em;
     color: #5C5C5C;
+    cursor: pointer;
+    text-decoration: none;
+}
+.activecourses-item-name:hover {
+    color: orange;
+}
+.activecourses-item-name:active {
+    color: orangered;
 }
 .activecourses-item-owner {
     grid-area: owner;
     color: #ACACAC;
+    cursor: pointer;
+}
+.activecourses-item-owner:hover {
+    color: orange;
+}
+.activecourses-item-owner:active {
+    color: orangered;
 }
 .activestreams {
     grid-area: content;
@@ -100,6 +120,11 @@ html {
     overflow-y: scroll;
     padding: 2em;
     box-sizing: border-box;
+}
+.activestreams p {
+    font-size: 2em;
+    color: cornflowerblue;
+    padding-bottom: 1em;
 }
 .activestreams-item {
     display: grid;
@@ -119,6 +144,13 @@ html {
     grid-area: name;
     font-size: 2em;
     color: #5C5C5C;
+    cursor: pointer;
+}
+.activestreams-item-name:hover {
+    color: orange;
+}
+.activestreams-item-name:active {
+    color: orangered;
 }
 .activestreams-item-owner {
     grid-area: owner;
@@ -128,8 +160,118 @@ html {
     grid-area: state;
     color: blue;
 }
+.activestreams-item-state:hover {
+    cursor: pointer;
+}
 .activestreams-item-period {
     grid-area: period;
     color: #ACACAC;
     font-size: 0.85em;
+}
+.subscribing-panel {
+    grid-area: content;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding: 2em;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-areas:
+        "greeting"
+        "name"
+        "owner"
+        "start"
+        "finish"
+        "link";
+    grid-template-rows: 2.25em 2.25em 3em 1.5em 2.5em 1em;
+    grid-template-columns: 1fr;
+}
+.subscribing-panel-greeting {
+    grid-area: greeting;
+    font-size: 1.75em;
+}
+.subscribing-panel-name {
+    grid-area: name;
+    font-size: 1.75em;
+}
+.subscribing-panel-owner {
+    grid-area: owner;
+    font-size: 1.25em;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+}
+.subscribing-panel-start {
+    grid-area: start;
+    font-size: 1em;
+}
+.subscribing-panel-finish {
+    grid-area: finish;
+    font-size: 1em;
+}
+.subscribing-panel-link {
+    grid-area: link;
+    font-size: 1em;
+}
+.course-public-panel {
+    grid-area: content;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding: 2em;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-areas:
+        "name"
+        "author"
+        "description"
+        "lessons";
+    grid-template-rows: 2.75em 2em auto 1fr;
+    grid-template-columns: 1fr;
+}
+.course-public-panel-name {
+    grid-area: name;
+    font-size: 1.75em;
+}
+.course-public-panel-author {
+    grid-area: author;
+    font-size: 1em;
+}
+.course-public-panel-description {
+    grid-area: description;
+    font-size: 1.25em;
+    font-weight: 100;
+
+}
+.course-public-panel-lessons {
+    grid-area: lessons;
+    font-size: 1.25em;
+    overflow-y: scroll;
+    padding-top: 1em;
+    padding-left: 1em;
+}
+.course-public-lesson-number {
+    display: inline-block;
+    font-size: 1em;
+    background-color: rgb(207, 135, 248);
+    height: 1.25em;
+    width: 1.25em;
+    border-radius: 50%;
+    margin-right: 0.5em;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.25em;
+}
+.course-public-lesson-theme {
+    display: inline-block;
+    font-size: 1em;
+}
+.course-public-lesson-purpose {
+    font-size: 0.85em;
+    padding-left: 2.0588em;
 }

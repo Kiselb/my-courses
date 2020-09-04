@@ -3,6 +3,12 @@ const router = express.Router()
 
 const controllers = require('../controllers/streams.js')
 
+router.get('/:id/subscribeinfo', (req, res) => {
+    controllers.subscribeOnStreamInfo(req, res)
+})
+router.get('/:id/subscribewarning', (req, res) => {
+    controllers.subscribeOnStreamWarning(req, res)
+})
 router.get('/active', (req, res) => {
     res.sendStatus(200)
 })
@@ -19,7 +25,6 @@ router.get('/:id/students', (req, res) => {
     res.sendStatus(200)
 })
 router.post('/:id/students', (req, res) => {
-    //res.sendStatus(200)
     controllers.subscribeOnStream(req, res)
 })
 router.get('/lessons/:id', (req, res) => {

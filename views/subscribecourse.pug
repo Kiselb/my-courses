@@ -1,0 +1,12 @@
+extends index
+
+block panel
+    .subscribing-panel
+        .subscribing-panel-greeting Поздравляем, Вы зачислены на курс
+        .subscribing-panel-name "#{Name}"
+        .subscribing-panel-owner Автор: #{Owner}
+        .subscribing-panel-start Начало занятий по курсу: #{new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Start))}
+        .subscribing-panel-finish Окончание занятий по курсу: #{new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Finish))}
+        .subscribing-panel-link
+            - var streamLink = '/streams/' + _id;
+            a(href=streamLink) Перейти на страницу Вашего потока курса

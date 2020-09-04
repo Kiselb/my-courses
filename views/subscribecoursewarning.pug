@@ -1,0 +1,10 @@
+extends index
+
+block panel
+    .subscribing-panel
+        .subscribing-panel-greeting Вы уже зачислены на курс
+        .subscribing-panel-name "#{Name}"
+        .subscribing-panel-owner Автор: #{Owner}
+        .subscribing-panel-link
+            - var streamLink = '/streams/' + _id;
+            a(href=streamLink) Перейти на страницу Вашего потока курса

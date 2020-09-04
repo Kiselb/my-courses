@@ -1,0 +1,17 @@
+extends index
+
+block panel
+    .course-public-panel
+        - var ownerLink = '/users/' + OwnerId;
+        .course-public-panel-name #{Name}
+        .course-public-panel-author
+            p Автор:
+                a(href=ownerLink) #{Owner}
+        .course-public-panel-description #{Description}
+        .course-public-panel-lessons
+            each lesson in Lessons
+                span.course-public-lesson-number #{lesson.OrderNo}
+                .course-public-lesson-theme #{lesson.Theme}
+                .course-public-lesson-purpose Цель урока: #{lesson.Purpose}
+                br
+

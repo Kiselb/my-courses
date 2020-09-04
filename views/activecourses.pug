@@ -2,8 +2,10 @@ extends index
 
 block panel
     .activecourses
+        p Курсы
         each course in courses
             .activecourses-item
                 img(src="/images/books-2379396_640.png" width="75" height="75" class=".activecourses-item-image")
-                .activecourses-item-name #{course.Name}
+                - var courseLink = '/public/courses/' + course._id;
+                a.activecourses-item-name(href=courseLink) #{course.Name}
                 .activecourses-item-owner #{course.Owner}       

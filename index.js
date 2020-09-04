@@ -41,7 +41,7 @@ app.use(['/courses', '/streams'], (req, res, next) => {
 app.get('/', (req, res, next) => {
     res.render('index', {})
 })
-app.use('/active', routersActive)
+app.use('/public', routersActive)
 app.use('/courses', routersCourses)
 app.use('/streams', routersStreams)
 app.use('/users', routersUsers)

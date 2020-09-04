@@ -76,7 +76,9 @@ var mycourses = (function() {
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
-                //window.location.href = 'http://127.0.0.1:5000/'
+                window.location.href = 'http://127.0.0.1:5000/streams/' + streamId + '/subscribeinfo';
+            } else if (request.readyState === 4 && request.status === 302) {
+                window.location.href = 'http://127.0.0.1:5000/streams/' + streamId + '/subscribewarning';
             }
         });
         request.send('{}');
