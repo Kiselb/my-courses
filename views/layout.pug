@@ -6,3 +6,8 @@ html
     script(src='/public/javascripts/main.js')
   body(onload="mycourses.bodyOnLoad()")
     block content
+    form#addLesssonToCourse.dialog-course-add-lesson(onsubmit='mycourses.courses.addLesson()')
+      div
+        div Регистрация лекции курса
+        textarea#dialog-course-add-lesson-theme(placeholder="Укажите тему лекции")
+        textarea#dialog-course-add-lesson-purpose(placeholder="Укажите цель лекции")

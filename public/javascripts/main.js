@@ -83,11 +83,21 @@ var mycourses = (function() {
         });
         request.send('{}');
     }
+    var addLessonDialog = function(courseId) {
+        alert("Adding new Lesson to course" + courseId);
+    }
+    var addLesson = function() {
+        alert("Adding new Lesson to course");
+    }
     return {
         login: login,
         logout: logout,
         islogged: islogged,
         bodyOnLoad: bodyOnLoad,
-        signupStream: signupStream
+        signupStream: signupStream,
+        courses: {
+            addLessonDialog: addLessonDialog,
+            addLesson: addLesson
+        }
     };
 })();
