@@ -1,11 +1,16 @@
 const express = require('express')
 const router = express.Router()
 
+const controllers = require('../controllers/courses')
+
 router.get('/', (req, res) => {
-    res.sendStatus(200)
+    controllers.mycourses(req, res)
 })
 router.post('/', (req, res) => {
     res.sendStatus(200)
+})
+router.get('/:id', (req, res) => {
+    controllers.course(req, res)
 })
 router.get('/:id/lessons', (req, res) => {
     res.sendStatus(200)

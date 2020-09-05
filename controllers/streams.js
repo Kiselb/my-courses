@@ -5,7 +5,6 @@ exports.subscribeOnStream = function(req, res) {
     const userId =  req.mycoursesUserId
     const streamId = req.params.id
 
-    console.log("UserId: ", userId)
     if (!userId || !streamId) {
         res.sendStatus(401)
     } else {
@@ -20,7 +19,8 @@ exports.subscribeOnStream = function(req, res) {
                 if (docs) {
                     res.sendStatus(302)
                 } else {
-                    users.findOneAndUpdate({ _id: mongoose.Types.ObjectId(userId)}, { $push: { 'streams': mongoose.Types.ObjectId(streamId) }}).exec((err, docs) => {
+                    // findOneAndUpdate --> findAndModify --> update
+                    users.update({ _id: mongoose.Types.ObjectId(userId)}, { $push: { 'streams': mongoose.Types.ObjectId(streamId) }}).exec((err, docs) => {
                         if (err) {
                             res.sendStatus(500)
                         } else {
@@ -135,4 +135,25 @@ exports.subscribeOnStreamWarning = function(req, res) {
             }
         }
     })    
+}
+exports.mystreams = function(req, res) {
+    const userId =  req.mycoursesUserId
+
+    if (!userId) {
+        res.sendStatus(401)
+    } else {
+        const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+        const schemaStreams = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Course: 'object', Start: 'date', Finish: 'date' })
+        const streams = connection.model('streams', schemaStreams)
+
+        streams.find({ Owner: mongoose.Types.ObjectId(userId), State: { $in: ['Active', 'Pending']}}).sort({ Name: 1 }).exec(
+            function(err, docs) {
+            if (err) {
+                res.sendStatus(500)
+            } else {
+                console.log(docs)
+                res.render('./private/streams', {streams: docs})
+            }
+        })
+    }
 }

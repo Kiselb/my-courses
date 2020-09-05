@@ -12,6 +12,9 @@ router.get('/courses/:id', (req, res) => {
 router.get('/streams', (req, res) => {
     controllers.streams(req, res)
 })
+router.get('/streams/:id', (req, res) => {
+    controllers.streampublic(req, res)
+})
 router.post('/streams/:id', (req, res) => {
     controllers.subscribe(req, res)
 })

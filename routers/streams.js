@@ -9,10 +9,10 @@ router.get('/:id/subscribeinfo', (req, res) => {
 router.get('/:id/subscribewarning', (req, res) => {
     controllers.subscribeOnStreamWarning(req, res)
 })
-router.get('/active', (req, res) => {
-    res.sendStatus(200)
+router.get('/', (req, res) => {
+    controllers.mystreams(req, res)
 })
-router.get('/archive', (req, res) => {
+router.post('/', (req, res) => {
     res.sendStatus(200)
 })
 router.get('/:id/lessons', (req, res) => {

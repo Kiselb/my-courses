@@ -6,7 +6,8 @@ block panel
         each stream in streams
             .activestreams-item
                 img(src="/images/books-2379396_640.png" width="75" height="75" class=".activecourses-item-image")
-                .activestreams-item-name #{stream.Name}
+                - var streamLink = '/public/streams/' + stream._id;
+                a.activestreams-item-name(href=streamLink) #{stream.Name}
                 .activestreams-item-owner #{stream.Owner}       
                 .activestreams-item-state(onclick='mycourses.signupStream("' + stream._id + '")') #{stream.StateInfo}       
                 .activestreams-item-period #{"Длительность: с " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Start)) + " по " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Finish))}       

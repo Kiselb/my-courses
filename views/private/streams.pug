@@ -1,0 +1,15 @@
+extends ../index
+
+block panel
+    .mystreams
+        .mystreams-header Потоки моих курсов 
+        .mystreams-streams
+            each stream in streams
+                .mystreams-stream
+                    - var courseLink = '/courses/' + stream.Course
+                    - var streamLections = '/streams/' + stream._id + '/lessons'
+                    .mystreams-stream-name #{stream.Name}
+                    .mystreams-stream-state #{stream.StateInfo}
+                    .mystreams-stream-period #{"Длительность: с " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Start)) + " по " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Finish))}       
+                    a.mystreams-stream-course(href=courseLink) Курс
+                    a.mystreams-stream-lections(href=streamLections) Лекции   

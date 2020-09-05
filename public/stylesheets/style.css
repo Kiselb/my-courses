@@ -145,6 +145,7 @@ html {
     font-size: 2em;
     color: #5C5C5C;
     cursor: pointer;
+    text-decoration: none;
 }
 .activestreams-item-name:hover {
     color: orange;
@@ -274,4 +275,254 @@ html {
 .course-public-lesson-purpose {
     font-size: 0.85em;
     padding-left: 2.0588em;
+}
+/*
+    Public stream details info
+*/
+.stream-public-panel {
+    grid-area: content;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding: 2em;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-areas:
+        "name"
+        "author"
+        "state"
+        "period"
+        "lessons";
+    grid-template-rows: 2.75em 2em 2em 2em 1fr;
+    grid-template-columns: 1fr;
+}
+.stream-public-panel-name {
+    grid-area: name;
+    font-size: 1.75em;
+}
+.stream-public-panel-author {
+    grid-area: author;
+    font-size: 1em;
+}
+.stream-public-panel-state {
+    grid-area: state;
+    font-size: 1em;
+}
+.stream-public-panel-period {
+    grid-area: period;
+    font-size: 1em;
+}
+.stream-public-panel-lessons {
+    grid-area: lessons;
+    font-size: 1.25em;
+    overflow-y: scroll;
+    padding-top: 1em;
+    padding-left: 1em;
+}
+.stream-public-lesson-number {
+    display: inline-block;
+    font-size: 1em;
+    background-color: rgb(207, 135, 248);
+    height: 1.25em;
+    width: 1.25em;
+    border-radius: 50%;
+    margin-right: 0.5em;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.25em;
+}
+.stream-public-lesson-theme {
+    display: inline-block;
+    font-size: 1em;
+}
+.stream-public-lesson-purpose {
+    font-size: 0.85em;
+    padding-left: 2.0588em;
+    padding-bottom: 0.15em;
+}
+.stream-public-lesson-duedate {
+    font-size: 0.75em;
+    padding-left: 2.3333em;
+}
+/*
+    My Courses
+*/
+.mycourses {
+    grid-area: content;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding: 2em;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-areas:
+        "header"
+        "courses";
+    grid-template-rows: 2.75em 1fr;
+    grid-template-columns: 1fr;
+}
+.mycourses-header {
+    grid-area: header;
+    font-size: 1.75em;
+}
+.mycourses-courses {
+    grid-area: courses;
+}
+.mycourses-course {
+    margin-bottom: 1em;
+}
+.mycourses-course-name {
+    font-size: 1.5em;
+    padding-bottom: 0.25em;
+}
+.mycourses-course-description {
+    font-size: 1em;
+    padding-bottom: 0.25em;
+}
+.mycourses-course-streams {
+    text-decoration: none;
+    color: blue;
+    display: inline-block;
+    padding-right: 1em;
+}
+.mycourses-course-lections {
+    text-decoration: none;
+    color: blue;
+    display: inline-block;
+}
+/*
+    My Streams
+*/
+.mystreams {
+    grid-area: content;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding: 2em;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-areas:
+        "header"
+        "streams";
+    grid-template-rows: 2.75em 1fr;
+    grid-template-columns: 1fr;
+}
+.mystreams-header {
+    grid-area: header;
+    font-size: 1.75em;
+}
+.mystreams-streams {
+    grid-area: streams;
+}
+.mystreams-stream {
+    margin-bottom: 1em;
+}
+.mystreams-stream-name {
+    font-size: 1.5em;
+    padding-bottom: 0.25em;
+}
+.mystreams-stream-state {
+    font-size: 1em;
+    padding-bottom: 0.25em;
+}
+.mystreams-stream-period {
+    font-size: 1em;
+    padding-bottom: 0.25em;
+}
+.mystreams-stream-course {
+    display: inline-block;
+    text-decoration: none;
+    color: blue;
+    padding-right: 1em;
+}
+.mystreams-stream-lections {
+    display: inline-block;
+    text-decoration: none;
+    color: blue;
+}
+/*
+    Course description
+*/
+.mycourse {
+    grid-area: content;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding: 2em;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-areas:
+        "name"
+        "state"
+        "description"
+        "action"
+        "lessons";
+    grid-template-rows: 2.75em 2em auto 2em 1fr;
+    grid-template-columns: 1fr;
+}
+.mycourse-name {
+    grid-area: name;
+    font-size: 1.75em;
+}
+.mycourse-state {
+    grid-area: state;
+    font-size: 1em;
+    color: red;
+}
+.mycourse-description {
+    grid-area: description;
+    font-size: 1.25em;
+    font-weight: 100;
+}
+.mycourse-action-add {
+    grid-area: action;
+    text-decoration: none;
+    color: blue;
+    align-self: end;
+}
+.mycourse-lessons {
+    grid-area: lessons;
+    font-size: 1.25em;
+    overflow-y: scroll;
+    padding-top: 1em;
+    padding-left: 1em;
+}
+.mycourse-lesson-orderno {
+    display: inline-block;
+    font-size: 1em;
+    background-color: rgb(207, 135, 248);
+    height: 1.25em;
+    width: 1.25em;
+    border-radius: 50%;
+    margin-right: 0.5em;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.25em;
+}
+.mycourse-lesson-theme {
+    display: inline-block;
+    font-size: 1em;
+}
+.mycourse-lesson-purpose {
+    font-size: 0.85em;
+    padding-left: 2.0588em;
+}
+.mycourse-lesson-materials {
+    display: block;
+    font-size: 0.85em;
+    padding-left: 2.0588em;
+    padding-bottom: 1em;
+    text-decoration: none;
 }

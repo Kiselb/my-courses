@@ -1,0 +1,15 @@
+extends ../index
+
+block panel
+    .mycourse
+        .mycourse-name #{Name} (описание)
+        .mycourse-description #{Description}
+        .mycourse-state #{State}
+        a.mycourse-action-add(href='') Добавить лекцию
+        .mycourse-lessons
+            each lesson in Lessons
+                - var materialsLink = '/course/' + _id + '/lessons/' + lesson.OrderNo + '/materials'
+                span.mycourse-lesson-orderno #{lesson.OrderNo}
+                .mycourse-lesson-theme #{lesson.Theme}
+                .mycourse-lesson-purpose #{lesson.Purpose}
+                a.mycourse-lesson-materials(href=materialsLink) Материалы   

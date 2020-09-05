@@ -134,8 +134,74 @@ exports.coursepublic = function(req, res) {
         if (err) {
             res.sendStatus(500)
         } else {
-            console.dir(docs[0])
-            res.render('coursepublic', docs[0])
+            res.render('publiccourse', docs[0])
+        }
+    }) 
+}
+exports.streampublic = function(req, res) {
+    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const schemaStream = new mongoose.Schema({ Name: 'string', Owner: 'object', Course: 'object', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date', lessons: 'array' })
+    const stream = connection.model('Streams', schemaStream)
+
+    const streamId = req.params.id
+    stream.aggregate(
+        [
+            { $match: { _id: mongoose.Types.ObjectId(streamId) }},
+            {
+              $lookup:
+                {
+                  from: "users",
+                  localField: "Owner",
+                  foreignField: "_id",
+                  as: "itemuser"
+                }
+            },
+            { $unwind: "$itemuser" },
+            {
+                $lookup:
+                {
+                    from: "courses",
+                    localField: "Course",
+                    foreignField: "_id",
+                    as: "itemcourse"
+                }
+            },
+            { $unwind: "$itemcourse" },
+            {
+                $project: {
+                    "Name": 1,
+                    "State": 1,
+                    "StateInfo": 1,
+                    "Owner": "$itemuser.Name",
+                    "OwnerId": "$itemuser._id",
+                    "CourseId": "$itemcourse._id",
+                    "Start": 1,
+                    "Finish" : 1,
+                    "Lessons": 1
+                }
+            },
+            { $unwind: "$Lessons" },
+            { $sort: { "Lessons.OrderNo": 1 }},
+            {
+                $group: {
+                    _id: "$_id",
+                    Name: { $first: "$Name" },
+                    State: { $first: "$State" },
+                    StateInfo: { $first: "$StateInfo" },
+                    OwnerId: { $first: "$OwnerId" },
+                    Owner: { $first: "$Owner" },
+                    CourseId: { $first: "$CourseId" },
+                    Start: { $first: "$Start" },
+                    Finish: { $first: "$Finish" },
+                    Lessons: { $push: "$Lessons" }
+                }
+            }
+        ]        
+    ).exec((err, docs) => {
+        if (err) {
+            res.sendStatus(500)
+        } else {
+            res.render('publicstream', docs[0])
         }
     }) 
 }

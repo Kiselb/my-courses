@@ -1,0 +1,14 @@
+extends ../index
+
+block panel
+    .mycourses
+        .mycourses-header Мои Курсы
+        .mycourses-courses
+            each course in courses
+                .mycourses-course
+                    - var streamsLink = '/courses/' + course._id + '/streams'
+                    - var courseLections = '/courses/' + course._id + '/lessons'
+                    .mycourses-course-name #{course.Name}
+                    .mycourses-course-description #{course.Description}
+                    a.mycourses-course-streams(href=streamsLink) Потоки   
+                    a.mycourses-course-lections(href=courseLections) Лекции   
