@@ -602,11 +602,21 @@ body {
 .mycourse-lesson-purpose {
     font-size: 0.85em;
     padding-left: 2.0588em;
+    padding-bottom: 0.5em;
 }
-.mycourse-lesson-materials {
-    display: block;
-    font-size: 0.85em;
+.mycourse-lesson-delete {
+    display: inline-block;
+    font-size: 0.8em;
     padding-left: 2.0588em;
     padding-bottom: 1em;
     text-decoration: none;
+    color: blue;
+}
+.mycourse-lesson-materials {
+    display: inline-block;
+    font-size: 0.8em;
+    padding-left: 1em;
+    padding-bottom: 1em;
+    text-decoration: none;
+    color: blue;
 }

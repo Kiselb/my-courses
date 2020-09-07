@@ -6,7 +6,7 @@ html
     script(src='/public/javascripts/main.js')
   body(onload="mycourses.bodyOnLoad()")
     block content
-    form#addLesssonToCourse.dialog-course-add-lesson.dialog-hide()
+    #addLesssonToCourse.dialog-course-add-lesson.dialog-hide()
       div
         .dialog-course-add-lesson-header Регистрация лекции курса
         textarea#dialog-course-add-lesson-theme(placeholder="Укажите тему лекции")

@@ -7,9 +7,13 @@ block panel
         .mycourse-state #{State}
         a.mycourse-action-add(href='' onclick='mycourses.courses.addLesson.Dialog("' + _id + '")') Добавить лекцию
         .mycourse-lessons
+            - var orderNumber = 1
             each lesson in Lessons
-                - var materialsLink = '/course/' + _id + '/lessons/' + lesson.OrderNo + '/materials'
-                span.mycourse-lesson-orderno #{lesson.OrderNo}
+                - var materialsLink = '/course/' + _id + '/lessons/' + orderNumber + '/materials'
+                span.mycourse-lesson-orderno #{orderNumber}
                 .mycourse-lesson-theme #{lesson.Theme}
                 .mycourse-lesson-purpose #{lesson.Purpose}
+                a.mycourse-lesson-delete(href='' onclick='mycourses.courses.remLesson("' + _id + '", ' + orderNumber + ')') Удалить
                 a.mycourse-lesson-materials(href=materialsLink) Материалы   
+                - orderNumber = orderNumber + 1
+                br

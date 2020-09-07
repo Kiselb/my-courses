@@ -13,10 +13,13 @@ router.get('/:id', (req, res) => {
     controllers.course(req, res)
 })
 router.get('/:id/lessons', (req, res) => {
-    res.sendStatus(200)
+    controllers.course(req, res)
 })
 router.post('/:id/lessons', (req, res) => {
-    res.sendStatus(200)
+    controllers.addCourseLesson(req, res)
+})
+router.delete('/:id/lessons/:num', (req, res) => {
+    controllers.remCourseLesson(req, res)
 })
 router.get('/lessons/:id', (req, res) => {
     res.sendStatus(200)
