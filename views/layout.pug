@@ -6,8 +6,25 @@ html
     script(src='/public/javascripts/main.js')
   body(onload="mycourses.bodyOnLoad()")
     block content
-    form#addLesssonToCourse.dialog-course-add-lesson(onsubmit='mycourses.courses.addLesson()')
+    form#addLesssonToCourse.dialog-course-add-lesson.dialog-hide()
       div
-        div Регистрация лекции курса
+        .dialog-course-add-lesson-header Регистрация лекции курса
         textarea#dialog-course-add-lesson-theme(placeholder="Укажите тему лекции")
         textarea#dialog-course-add-lesson-purpose(placeholder="Укажите цель лекции")
+        .dialog-course-add-lesson-position
+          p
+            label
+              input(name="addLesssonToCoursePositionType" type="radio" value="0")
+              | Первая
+          p
+            label
+              input(name="addLesssonToCoursePositionType" type="radio" value="-1")
+              | Последняя
+          p
+            label
+              input(name="addLesssonToCoursePositionType" type="radio" value="1")
+              | Произвольно
+              input#addLesssonToCoursePositionValue(type="number" placeholder="№ п/п")
+        .dialog-course-add-lesson-actions
+          button(onclick='mycourses.courses.addLesson.OK()') OK
+          button(onclick='mycourses.courses.addLesson.Cancel()') Отмена

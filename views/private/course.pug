@@ -5,7 +5,7 @@ block panel
         .mycourse-name #{Name} (описание)
         .mycourse-description #{Description}
         .mycourse-state #{State}
-        a.mycourse-action-add(href='' onclick='mycourses.courses.addLessonDialog("' + _id + '")') Добавить лекцию
+        a.mycourse-action-add(href='' onclick='mycourses.courses.addLesson.Dialog("' + _id + '")') Добавить лекцию
         .mycourse-lessons
             each lesson in Lessons
                 - var materialsLink = '/course/' + _id + '/lessons/' + lesson.OrderNo + '/materials'

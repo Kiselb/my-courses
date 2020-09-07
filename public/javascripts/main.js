@@ -20,6 +20,11 @@ var mycourses = (function() {
             document.getElementById("menuitem07").classList.add('menu-item-toggle');
             document.getElementById("user").classList.add('menu-item-toggle');
         }
+        const courseId = localStorage.getItem('mycourses.course.addLesson')
+        if (!!courseId) {
+            const dialog = document.getElementById('addLesssonToCourse');
+            dialog.classList.remove('dialog-hide')
+        }
     }
     var login = function() {
         const name = document.getElementById('name').value;
@@ -84,10 +89,15 @@ var mycourses = (function() {
         request.send('{}');
     }
     var addLessonDialog = function(courseId) {
-        alert("Adding new Lesson to course" + courseId);
+        const dialog = document.getElementById('addLesssonToCourse');
+        dialog.classList.remove('dialog-hide')
+        localStorage.setItem('mycourses.course.addLesson', courseId)
     }
-    var addLesson = function() {
-        alert("Adding new Lesson to course");
+    var addLessonOK = function() {
+        localStorage.removeItem('mycourses.course.addLesson')
+    }
+    var addLessonCancel = function() {
+        localStorage.removeItem('mycourses.course.addLesson')
     }
     return {
         login: login,
@@ -96,8 +106,11 @@ var mycourses = (function() {
         bodyOnLoad: bodyOnLoad,
         signupStream: signupStream,
         courses: {
-            addLessonDialog: addLessonDialog,
-            addLesson: addLesson
+            addLesson: {
+                Dialog: addLessonDialog,
+                OK: addLessonOK,
+                Cancel: addLessonCancel
+            }
         }
     };
 })();
