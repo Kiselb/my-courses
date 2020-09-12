@@ -9,7 +9,7 @@ block panel
         .mycourse-lessons
             - var orderNumber = 1
             each lesson in Lessons
-                - var materialsLink = '/course/' + _id + '/lessons/' + orderNumber + '/materials'
+                - var materialsLink = '/courses/' + _id + '/lessons/' + orderNumber + '/materials'
                 span.mycourse-lesson-orderno #{orderNumber}
                 .mycourse-lesson-theme #{lesson.Theme}
                 .mycourse-lesson-purpose #{lesson.Purpose}

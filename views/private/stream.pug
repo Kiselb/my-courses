@@ -1,0 +1,20 @@
+extends ../index
+
+block panel
+    .mystream
+        .mystream-name #{Name} (Лекции)
+        .mystream-state #{StateInfo}
+        .mystream-period #{"Длительность: с " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Start)) + " по " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Finish))}
+        a.mystream-action-add(href='' onclick='mycourses.streams.addLesson.Dialog("' + _id + '")') Добавить лекцию
+        .mystream-lessons
+            - var orderNumber = 1
+            each lesson in Lessons
+                - var materialsLink = '/streams/' + _id + '/lessons/' + orderNumber + '/materials'
+                span.mystream-lesson-orderno #{orderNumber}
+                .mystream-lesson-theme #{lesson.Theme}
+                .mystream-lesson-purpose #{lesson.Purpose}
+                .mystream-lesson-duedate Дата и время проведения: #{new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }).format(new Date(lesson.DueDate))}
+                a.mystream-lesson-delete(href='' onclick='mycourses.streams.remLesson("' + _id + '", ' + orderNumber + ')') Удалить
+                a.mystream-lesson-materials(href=materialsLink) Материалы   
+                - orderNumber = orderNumber + 1
+                br

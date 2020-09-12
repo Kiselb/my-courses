@@ -6,7 +6,7 @@ html
     script(src='/public/javascripts/main.js')
   body(onload="mycourses.bodyOnLoad()")
     block content
-    #addLesssonToCourse.dialog-course-add-lesson.dialog-hide()
+    #add-lesson-to-course.dialog-course-add-lesson.dialog-hide()
       div
         .dialog-course-add-lesson-header Регистрация лекции курса
         textarea#dialog-course-add-lesson-theme(placeholder="Укажите тему лекции")
@@ -24,7 +24,31 @@ html
             label
               input(name="addLesssonToCoursePositionType" type="radio" value="1")
               | Произвольно
-              input#addLesssonToCoursePositionValue(type="number" placeholder="№ п/п")
+              input#dialog-course-add-lesson-position-value(type="number" placeholder="№ п/п")
         .dialog-course-add-lesson-actions
           button(onclick='mycourses.courses.addLesson.OK()') OK
           button(onclick='mycourses.courses.addLesson.Cancel()') Отмена
+    #add-lesson-to-stream.dialog-stream-add-lesson.dialog-hide()
+      div
+        .dialog-stream-add-lesson-header Регистрация лекции потока
+        textarea#dialog-stream-add-lesson-theme(placeholder="Укажите тему лекции")
+        textarea#dialog-stream-add-lesson-purpose(placeholder="Укажите цель лекции")
+        input#dialog-stream-add-lesson-date(type="date").dialog-stream-add-lesson-date
+        input#dialog-stream-add-lesson-time(type="time").dialog-stream-add-lesson-time
+        .dialog-stream-add-lesson-position
+          p
+            label
+              input(name="addLesssonToStreamPositionType" type="radio" value="0")
+              | Первая
+          p
+            label
+              input(name="addLesssonToStreamPositionType" type="radio" value="-1")
+              | Последняя
+          p
+            label
+              input(name="addLesssonToStreamPositionType" type="radio" value="1")
+              | Произвольно
+              input#dialog-stream-add-lesson-position-value(type="number" placeholder="№ п/п")
+        .dialog-stream-add-lesson-actions
+          button(onclick='mycourses.streams.addLesson.OK()') OK
+          button(onclick='mycourses.streams.addLesson.Cancel()') Отмена

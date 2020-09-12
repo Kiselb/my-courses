@@ -21,13 +21,13 @@ router.post('/:id/lessons', (req, res) => {
 router.delete('/:id/lessons/:num', (req, res) => {
     controllers.remCourseLesson(req, res)
 })
-router.get('/lessons/:id', (req, res) => {
+router.get('/:id/lessons/:num', (req, res) => {
     res.sendStatus(200)
 })
-router.get('/lessons/:id/materials', (req, res) => {
+router.get('/:id/lessons/:num/materials', (req, res) => {
     res.sendStatus(200)
 })
-router.post('/lessons/:id/materials', (req, res) => {
+router.post('/:id/lessons/:num/materials', (req, res) => {
     res.sendStatus(200)
 })
 router.get('/:id/streams', (req, res) => {

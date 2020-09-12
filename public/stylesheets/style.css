@@ -7,9 +7,14 @@ body {
 /*
     https://medium.com/front-end-weekly/absolute-centering-in-css-ea3a9d0ad72e
 */
+
+/*
+    Dialogs
+*/
 .dialog-hide {
     display: none;
 }
+/* Course lesson dialog */
 .dialog-course-add-lesson {
     position: absolute;
     top: 50%;
@@ -47,7 +52,6 @@ body {
     width: calc(100% - 2em - 2em);
     resize: none;
 }
-
 #dialog-course-add-lesson-theme {
     margin-top: 1.5em;
     height: 2.5em;
@@ -65,7 +69,7 @@ body {
 .dialog-course-add-lesson-position > p {
     margin-top: 0.5em;
 }
-#addLesssonToCoursePositionValue {
+#add-lessson-to-course-position-value {
     font-family: 'Open Sans', sans-serif;
     font-size: 0.87em;
     margin-left: 0.5em;
@@ -84,6 +88,95 @@ body {
     float: right;
     margin-left: 0.5em;
 }
+
+/* Stream Lesson Dialog */
+.dialog-stream-add-lesson {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 34em;
+    width: 40em;
+}
+.dialog-stream-add-lesson > div {
+    background-color: #DFDFDF;
+    border-width: 1px;
+    border-color: darkgrey;
+    border-style: solid;
+    height: 34em;
+    width: 40em;
+}
+.dialog-stream-add-lesson-header {
+    width: 100%;
+    height: 2em;
+    background-color: #7152D9;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.25em;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 2em;
+}
+.dialog-stream-add-lesson > div > textarea {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.15em;
+    display: block;
+    margin-left: 2em;
+    margin-right: 2em;
+    width: calc(100% - 2em - 2em);
+    resize: none;
+}
+#dialog-stream-add-lesson-theme {
+    margin-top: 1.5em;
+    height: 2.5em;
+}
+#dialog-stream-add-lesson-purpose {
+    margin-top: 0.25em;
+    height: 7.5em;
+}
+.dialog-stream-add-lesson-date {
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.15em;
+    margin-top: 1.25em;
+    margin-left: 2em;
+}
+.dialog-stream-add-lesson-time {
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.15em;
+    margin-top: 0.25em;
+    margin-left: 2em;
+}
+.dialog-stream-add-lesson-position {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.15em;
+    margin-top: 1.25em;
+    margin-left: 2em;
+}
+.dialog-stream-add-lesson-position > p {
+    margin-top: 0.5em;
+}
+#add-lessson-to-stream-position-value {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.87em;
+    margin-left: 0.5em;
+    width: 5em;
+}
+.dialog-stream-add-lesson-actions {
+    margin-top: 2em;
+    margin-right: 2.3em;
+    height: 2em;
+}
+.dialog-stream-add-lesson-actions > button {
+    width: 4.75em;
+    height: 2em;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
+    float: right;
+    margin-left: 0.5em;
+}
+
 .main {
     width: 1100px;
     height: 100vh;
@@ -528,6 +621,12 @@ body {
     color: blue;
     padding-right: 1em;
 }
+.mystreams-stream-students {
+    display: inline-block;
+    text-decoration: none;
+    color: blue;
+    padding-right: 1em;
+}
 .mystreams-stream-lections {
     display: inline-block;
     text-decoration: none;
@@ -613,6 +712,97 @@ body {
     color: blue;
 }
 .mycourse-lesson-materials {
+    display: inline-block;
+    font-size: 0.8em;
+    padding-left: 1em;
+    padding-bottom: 1em;
+    text-decoration: none;
+    color: blue;
+}
+/*
+    Stream description
+*/
+.mystream {
+    grid-area: content;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding: 2em;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-areas:
+        "name"
+        "state"
+        "period"
+        "action"
+        "lessons";
+    grid-template-rows: 2.75em 2em 2em 2em 1fr;
+    grid-template-columns: 1fr;
+}
+.mystream-name {
+    grid-area: name;
+    font-size: 1.75em;
+}
+.mystream-state {
+    grid-area: state;
+    font-size: 1em;
+    color: red;
+}
+.mystream-period {
+    grid-area: period;
+    font-size: 1em;
+}
+.mystream-action-add {
+    grid-area: action;
+    text-decoration: none;
+    color: blue;
+    align-self: end;
+}
+.mystream-lessons {
+    grid-area: lessons;
+    font-size: 1.25em;
+    overflow-y: scroll;
+    padding-top: 1em;
+    padding-left: 1em;
+}
+.mystream-lesson-orderno {
+    display: inline-block;
+    font-size: 1em;
+    background-color: rgb(207, 135, 248);
+    height: 1.25em;
+    width: 1.25em;
+    border-radius: 50%;
+    margin-right: 0.5em;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1.25em;
+}
+.mystream-lesson-theme {
+    display: inline-block;
+    font-size: 1em;
+}
+.mystream-lesson-purpose {
+    font-size: 0.85em;
+    padding-left: 2.0588em;
+    padding-bottom: 0.5em;
+}
+.mystream-lesson-duedate {
+    font-size: 0.85em;
+    padding-left: 2.0588em;
+    padding-bottom: 0.5em;
+}
+.mystream-lesson-delete {
+    display: inline-block;
+    font-size: 0.8em;
+    padding-left: 2.0588em;
+    padding-bottom: 1em;
+    text-decoration: none;
+    color: blue;
+}
+.mystream-lesson-materials {
     display: inline-block;
     font-size: 0.8em;
     padding-left: 1em;

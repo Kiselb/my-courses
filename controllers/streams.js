@@ -157,3 +157,102 @@ exports.mystreams = function(req, res) {
         })
     }
 }
+exports.stream = function(req, res) {
+    const userId =  req.mycoursesUserId
+    const streamId = req.params.id
+
+    if (!userId) {
+        res.sendStatus(401)
+    } else {
+        const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+        const schemaStreams = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date', Lessons: 'array' })
+        const streams = connection.model('streams', schemaStreams)
+
+        streams.findOne({ _id: mongoose.Types.ObjectId(streamId) }, { Lessons: { $elemMatch: { $not: { $in: [null] }}}}
+        ).exec(
+            function(err, docs) {
+            if (err) {
+                res.sendStatus(500)
+            } else {
+                if (!docs) {
+                    res.sendStatus(404)
+                } else {
+                    res.render('./private/stream', docs)
+                }
+            }
+        })
+    }
+}
+exports.addStreamLesson = function(req, res) {
+    const userId =  req.mycoursesUserId
+
+    if (!userId) {
+        res.sendStatus(401)
+    } else {
+        const streamId = req.params.id
+        if (!streamId) {
+            res.sendStatus(400)
+        } else {
+            const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+            const schemaStreams = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date', Lessons: 'array' })
+            const streams = connection.model('streams', schemaStreams)
+
+            streams.findOne({ _id: mongoose.Types.ObjectId(streamId) }).exec((err, docs) => {
+                if (err) {
+                    res.sendStatus(500)
+                } else {
+                    if (!docs) {
+                        res.sendStatus(404)
+                        return
+                    }
+                    if (typeof req.body.type === "undefined") {
+                        res.sendStatus(400)
+                        return
+                    }
+                    const type = +req.body.type;
+                    if (type === 0) {
+                        streams.findOneAndUpdate(
+                            { _id: mongoose.Types.ObjectId(streamId) },
+                            { $push: { Lessons: { $each: [{ OrderNo: 1, Theme: req.body.theme, Purpose: req.body.purpose, Duration: 2, DueDate: req.body.dueDate, Materials: [] }], $position: 0 }}}
+                        ).exec((err, docs) => {
+                            if (err) {
+                                res.sendStatus(500)
+                            } else {
+                                res.sendStatus(200)
+                            }
+                        })
+                    } else if (type < 0) {
+                        streams.findOneAndUpdate(
+                            { _id: mongoose.Types.ObjectId(streamId) },
+                            { $push: { Lessons: {OrderNo: 1, Theme: req.body.theme, Purpose: req.body.purpose, Duration: 2, DueDate: req.body.dueDate, Materials: []}}}
+                        ).exec((err, docs) => {
+                            if (err) {
+                                res.sendStatus(500)
+                            } else {
+                                res.sendStatus(200)
+                            }
+                        })
+                    } else if (type > 0) {
+                        if (typeof req.body.position === "undefined") {
+                            sendStatus(400)
+                            return
+                        }
+                        const position = +req.body.position
+                        streams.findOneAndUpdate(
+                            { _id: mongoose.Types.ObjectId(streamId) },
+                            { $push: { Lessons: { $each: [{OrderNo: 1, Theme: req.body.theme, Purpose: req.body.purpose, Duration: 2, DueDate: req.body.dueDate, Materials: [] }], $position: position - 1 }}}
+                        ).exec((err, docs) => {
+                            if (err) {
+                                res.sendStatus(500)
+                            } else {
+                                res.sendStatus(200)
+                            }
+                        })
+                    } else {
+                        res.sendStatus(400)
+                    }
+                }
+            })
+        }
+    }
+}

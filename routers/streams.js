@@ -15,11 +15,14 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     res.sendStatus(200)
 })
+router.get('/:id', (req, res) => {
+    controllers.stream(req, res)
+})
 router.get('/:id/lessons', (req, res) => {
-    res.sendStatus(200)
+    controllers.stream(req, res)
 })
 router.post('/:id/lessons', (req, res) => {
-    res.sendStatus(200)
+    controllers.addStreamLesson(req, res)
 })
 router.get('/:id/students', (req, res) => {
     res.sendStatus(200)
@@ -27,19 +30,19 @@ router.get('/:id/students', (req, res) => {
 router.post('/:id/students', (req, res) => {
     controllers.subscribeOnStream(req, res)
 })
-router.get('/lessons/:id', (req, res) => {
+router.get('/:id/lessons/:num', (req, res) => {
     res.sendStatus(200)
 })
-router.get('/lessons/:id/materials', (req, res) => {
+router.get('/:id/lessons/:num/materials', (req, res) => {
     res.sendStatus(200)
 })
-router.post('/lessons/:id/materials', (req, res) => {
+router.post('/:id/lessons/:num/materials', (req, res) => {
     res.sendStatus(200)
 })
-router.get('/lessons/:id/comments', (req, res) => {
+router.get('/:id/lessons/:num/comments', (req, res) => {
     res.sendStatus(200)
 })
-router.post('/lessons/:id/comments', (req, res) => {
+router.post('/:id/lessons/:num/comments', (req, res) => {
     res.sendStatus(200)    
 })
 
