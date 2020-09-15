@@ -703,6 +703,10 @@ body {
     padding-left: 2.0588em;
     padding-bottom: 0.5em;
 }
+.mycourse-stream-item {
+    font-size: 0.85em;
+    padding-left: 2.0588em;
+}
 .mycourse-lesson-delete {
     display: inline-block;
     font-size: 0.8em;

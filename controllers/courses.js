@@ -49,6 +49,70 @@ exports.course = function(req, res) {
         })
     }
 }
+exports.courseStreams = function(req, res) {
+    const userId =  req.mycoursesUserId
+    const courseId = req.params.id
+
+    if (!userId) {
+        res.sendStatus(401)
+    } else {
+        if (!courseId) {
+            res.sendStatus(400)
+        } else {
+            const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+            const schemaStreams = new mongoose.Schema({ Name: 'string', Course: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date' })
+            const streams = connection.model('streams', schemaStreams)
+
+            streams.aggregate(
+                [
+                    { $match: {  Course: mongoose.Types.ObjectId(courseId) }},
+                    {
+                        $project: {
+                            "Name": 1,
+                            "Owner": 1,
+                            "Course": 1,
+                            "State": 1,
+                            "StateInfo": 1,
+                            "Start": 1,
+                            "Finish": 1
+                        }
+                    },
+                    {
+                        $group: {
+                            _id: "$Course",
+                            streams: { $push: { Name: "$Name", Owner: "$Owner", State: "$State", StateInfo: "$StateInfo", Start: "$Start", Finish: "$Finish" } }
+                        }
+                    },
+                    {
+                        $lookup:
+                        {
+                            from: "courses",
+                            localField: "_id",
+                            foreignField: "_id",
+                            as: "itemcourse"
+                        }
+                    },
+                    { $unwind: "$itemcourse" },
+                    {
+                        $project: {
+                            Name: "$itemcourse.Name",
+                            Description: "$itemcourse.Description",
+                            State: "$itemcourse.State",
+                            streams: 1
+                        }
+                    },
+                ]        
+            ).exec((err, docs) => {
+                if (err) {
+                    res.sendStatus(500)
+                } else {
+                    console.log(docs[0])
+                    res.render('./private/coursestreams', docs[0])
+                }
+            })
+        }
+    }
+}
 exports.mycourses = function(req, res) {
     const userId =  req.mycoursesUserId
 

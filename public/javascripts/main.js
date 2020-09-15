@@ -99,12 +99,13 @@ var mycourses = (function() {
     }
     var courseAddLessonOK = function() {
         const courseId = localStorage.getItem('mycourses.course.addLesson');
+        if (!courseId) return;
         const request = new XMLHttpRequest();
         request.open('POST', "http://127.0.0.1:5000/courses/" + courseId + "/lessons");
+        localStorage.removeItem('mycourses.course.addLesson')
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
-                localStorage.removeItem('mycourses.course.addLesson')
                 window.location.href = 'http://127.0.0.1:5000/courses/' + courseId;
             }
         });
@@ -153,12 +154,13 @@ var mycourses = (function() {
     }
     var streamAddLessonOK = function() {
         const streamId = localStorage.getItem('mycourses.stream.addLesson');
+        if (!streamId) return;
         const request = new XMLHttpRequest();
         request.open('POST', "http://127.0.0.1:5000/streams/" + streamId + "/lessons");
+        localStorage.removeItem('mycourses.stream.addLesson')
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
-                localStorage.removeItem('mycourses.stream.addLesson')
                 window.location.href = 'http://127.0.0.1:5000/streams/' + streamId;
             }
         });

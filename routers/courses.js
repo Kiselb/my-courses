@@ -31,7 +31,7 @@ router.post('/:id/lessons/:num/materials', (req, res) => {
     res.sendStatus(200)
 })
 router.get('/:id/streams', (req, res) => {
-    res.sendStatus(200)
+    controllers.courseStreams(req, res)
 })
 router.post('/:id/streams', (req, res) => {
     res.sendStatus(200)

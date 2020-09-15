@@ -1,0 +1,15 @@
+extends ../index
+
+block panel
+    .mystream
+        .mystream-name #{Name} (Студенты)
+        .mystream-state #{StateInfo}
+        .mystream-period #{"Длительность: с " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Start)) + " по " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Finish))}
+        .mystream-lessons
+            - var orderNumber = 1
+            each student in students
+                span.mystream-lesson-orderno #{orderNumber}
+                .mystream-lesson-theme #{student.Name}
+                .mystream-lesson-purpose #{student.EMail}
+                - orderNumber = orderNumber + 1
+                br

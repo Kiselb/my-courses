@@ -1,0 +1,17 @@
+extends ../index
+
+block panel
+    .mycourse
+        .mycourse-name #{Name} (Потоки)
+        .mycourse-description #{Description}
+        .mycourse-state #{State}
+        a.mycourse-action-add(href='' onclick='mycourses.courses.addStream("' + _id + '", ' + _id + ')') Добавить поток
+        .mycourse-lessons
+            - var orderNumber = 1
+            each stream in streams
+                span.mycourse-lesson-orderno #{orderNumber}
+                .mycourse-lesson-theme #{stream.Name}
+                .mycourse-stream-item #{stream.StateInfo}
+                .mycourse-stream-item #{"Длительность: с " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Start)) + " по " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Finish))}
+                - orderNumber = orderNumber + 1
+                br

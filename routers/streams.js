@@ -18,20 +18,20 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
     controllers.stream(req, res)
 })
+router.get('/:id/students', (req, res) => {
+    controllers.students(req, res)
+})
+router.post('/:id/students', (req, res) => {
+    controllers.subscribeOnStream(req, res)
+})
 router.get('/:id/lessons', (req, res) => {
     controllers.stream(req, res)
 })
 router.post('/:id/lessons', (req, res) => {
     controllers.addStreamLesson(req, res)
 })
-router.get('/:id/students', (req, res) => {
-    res.sendStatus(200)
-})
-router.post('/:id/students', (req, res) => {
-    controllers.subscribeOnStream(req, res)
-})
-router.get('/:id/lessons/:num', (req, res) => {
-    res.sendStatus(200)
+router.delete('/:id/lessons/:num', (req, res) => {
+    controllers.remStreamLesson(req, res)
 })
 router.get('/:id/lessons/:num/materials', (req, res) => {
     res.sendStatus(200)
