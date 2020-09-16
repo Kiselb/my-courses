@@ -52,7 +52,7 @@ html
         .dialog-stream-add-lesson-actions
           button(onclick='mycourses.streams.addLesson.OK()') OK
           button(onclick='mycourses.streams.addLesson.Cancel()') Отмена
-    #add-stream-to-course.dialog-course-add-stream()
+    #add-stream-to-course.dialog-course-add-stream.dialog-hide()
       div
         .dialog-course-add-stream-header Регистрация нового потока курса
         p.dialog-course-add-stream-params
@@ -74,5 +74,5 @@ html
                 input.dialog-course-add-stream-schedule-lesson-time(type="time" id="stream-schedule-lesson-time-" + lessonNumber)
                 - lessonNumber = lessonNumbe + 1
         .dialog-course-add-stream-actions
-          button(onclick='mycourses.course.addStream.OK()') OK
-          button(onclick='mycourses.course.addStream.Cancel()') Отмена
+          button(onclick='mycourses.courses.addStream.OK()') OK
+          button(onclick='mycourses.courses.addStream.Cancel()') Отмена

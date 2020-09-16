@@ -236,7 +236,7 @@ exports.remCourseLesson = function(req, res) {
                                     if (err) {
                                         res.sendStatus(500)
                                     } else {
-                                        res.sendStatus(200)
+                                        res.sendStatus(204)
                                     }
                                 })
                             }

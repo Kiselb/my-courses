@@ -148,7 +148,7 @@ var mycourses = (function() {
         request.open('DELETE', "http://127.0.0.1:5000/courses/" + courseId + "/lessons/" + lesson);
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener("readystatechange", () => {
-            if (request.readyState === 4 && request.status === 200) {
+            if (request.readyState === 4 && request.status === 204) {
                 window.location.href = 'http://127.0.0.1:5000/courses/' + courseId;
             }
         });
@@ -156,14 +156,29 @@ var mycourses = (function() {
     }
     var courseAddStreamDialog = function(courseId) {
         console.log("Add new Course Stream");
+        
+        if (!!localStorage.getItem('mycourses.course.addStream')) return;
+
         const dialog = document.getElementById('add-stream-to-course');
         localStorage.setItem('mycourses.course.addStream', courseId)
+
+        const request = new XMLHttpRequest();
+        request.open('GET', "http://127.0.0.1:5000/courses/" + courseId);
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.addEventListener("readystatechange", () => {
+            if (request.readyState === 4 && request.status === 200) {
+                //window.location.href = 'http://127.0.0.1:5000/courses/' + courseId;
+                alert(request.responseText);
+            }
+        });
+        request.send(JSON.stringify({}));
     }
     var courseAddStreamOK = function() {
-
     }
     var courseAddStreamCancel = function() {
-        
+        const courseId = localStorage.getItem('mycourses.course.addStream');
+        localStorage.removeItem('mycourses.course.addStream');
+        window.location.href = 'http://127.0.0.1:5000/courses/' + courseId + '/streams';
     }
     var streamAddLessonDialog = function(streamId) {
         const dialog = document.getElementById('add-lessson-to-stream');
@@ -220,7 +235,7 @@ var mycourses = (function() {
         request.open('DELETE', "http://127.0.0.1:5000/streams/" + streamId + "/lessons/" + lesson);
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener("readystatechange", () => {
-            if (request.readyState === 4 && request.status === 200) {
+            if (request.readyState === 4 && request.status === 204) {
                 window.location.href = 'http://127.0.0.1:5000/streams/' + streamId;
             }
         });
