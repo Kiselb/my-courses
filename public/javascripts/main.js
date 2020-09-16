@@ -20,14 +20,20 @@ var mycourses = (function() {
             document.getElementById("menuitem07").classList.add('menu-item-toggle');
             document.getElementById("user").classList.add('menu-item-toggle');
         }
-        const courseId = localStorage.getItem('mycourses.course.addLesson')
-        const streamId = localStorage.getItem('mycourses.stream.addLesson')
-        if (!!courseId) {
+        let id = undefined;
+        id = localStorage.getItem('mycourses.course.addLesson')
+        if (!!id) {
             const dialog = document.getElementById('add-lesson-to-course');
             dialog.classList.remove('dialog-hide')
         }
-        if (!!streamId) {
+        id = localStorage.getItem('mycourses.stream.addLesson')
+        if (!!id) {
             const dialog = document.getElementById('add-lesson-to-stream');
+            dialog.classList.remove('dialog-hide')
+        }
+        id = localStorage.getItem('mycourses.course.addStream')
+        if (!!id) {
+            const dialog = document.getElementById('add-stream-to-course');
             dialog.classList.remove('dialog-hide')
         }
     }
@@ -148,6 +154,17 @@ var mycourses = (function() {
         });
         request.send(JSON.stringify({}));
     }
+    var courseAddStreamDialog = function(courseId) {
+        console.log("Add new Course Stream");
+        const dialog = document.getElementById('add-stream-to-course');
+        localStorage.setItem('mycourses.course.addStream', courseId)
+    }
+    var courseAddStreamOK = function() {
+
+    }
+    var courseAddStreamCancel = function() {
+        
+    }
     var streamAddLessonDialog = function(streamId) {
         const dialog = document.getElementById('add-lessson-to-stream');
         localStorage.setItem('mycourses.stream.addLesson', streamId)
@@ -221,7 +238,12 @@ var mycourses = (function() {
                 OK: courseAddLessonOK,
                 Cancel: courseAddLessonCancel
             },
-            remLesson : courseRemLesson
+            remLesson: courseRemLesson,
+            addStream:  {
+                Dialog: courseAddStreamDialog,
+                OK: courseAddStreamOK,
+                Cancel: courseAddStreamCancel
+            }
         },
         streams: {
             addLesson: {

@@ -176,6 +176,76 @@ body {
     float: right;
     margin-left: 0.5em;
 }
+/* Course Stream dialog */
+.dialog-course-add-stream {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 32em;
+    width: 40em;
+}
+.dialog-course-add-stream > div {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #DFDFDF;
+    border-width: 1px;
+    border-color: darkgrey;
+    border-style: solid;
+    height: 32em;
+    width: 40em;
+}
+.dialog-course-add-stream-header {
+    width: 100%;
+    height: 2em;
+    background-color: #7152D9;
+    color: white;
+    font-size: 1.25em;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 2em;
+
+}
+.dialog-course-add-stream-params {
+    margin-left: 1.5em;
+    margin-top: 1em;
+}
+.dialog-course-add-stream-params:last-of-type {
+    margin-top: 0.25em;
+}
+.dialog-course-add-stream-date-label {
+    display: inline-block;
+    width: 10em;
+    font-family: inherit;
+}
+.dialog-course-add-stream-date {
+    display: inline-block;
+    width: 10em;
+    font-family: inherit;
+    font-size: 1em;
+}
+.dialog-course-add-stream-schedule {
+    height: 20em;
+    width: 37em;
+    margin-left: 1.5em;
+    margin-top: 0.25em;
+    background: #FFF;
+    border-style: solid;
+    border-width: 1px;
+    border-color: darkgrey;
+}
+.dialog-course-add-stream-actions {
+    margin-top: 1em;
+    margin-right: 1.5em;
+    height: 2em;
+}
+.dialog-course-add-stream-actions > button {
+    width: 4.75em;
+    height: 2em;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1em;
+    float: right;
+    margin-left: 0.5em;
+}
 
 .main {
     width: 1100px;
@@ -802,6 +872,14 @@ body {
     display: inline-block;
     font-size: 0.8em;
     padding-left: 2.0588em;
+    padding-bottom: 1em;
+    text-decoration: none;
+    color: blue;
+}
+.mystream-lesson-change {
+    display: inline-block;
+    font-size: 0.8em;
+    padding-left: 1em;
     padding-bottom: 1em;
     text-decoration: none;
     color: blue;

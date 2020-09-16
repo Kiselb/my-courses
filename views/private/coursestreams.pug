@@ -5,7 +5,7 @@ block panel
         .mycourse-name #{Name} (Потоки)
         .mycourse-description #{Description}
         .mycourse-state #{State}
-        a.mycourse-action-add(href='' onclick='mycourses.courses.addStream("' + _id + '", ' + _id + ')') Добавить поток
+        a.mycourse-action-add(href='' onclick='mycourses.courses.addStream("' + _id + '")') Добавить поток
         .mycourse-lessons
             - var orderNumber = 1
             each stream in streams
