@@ -13,7 +13,6 @@ router.post('/', async (req, res) => {
         const token = await auth.login(req.body.name, req.body.password)
         if (!!token.token) {
             res.cookie('mycoursestoken', token.token, { httpOnly: true }) //, secure: true})
-            console.log(token.token)
             res.status(200).send({ userId: token.userId })
         } else {
             res.sendStatus(401)

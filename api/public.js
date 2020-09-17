@@ -1,7 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
 
-exports.courses = function(req, res) {
+const router = express.Router()
+
+router.get('/courses', (req, res) => {
     const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
     const schemaCourse = new mongoose.Schema({ Name: 'string', State: 'string', Owner: 'string' })
     const courses = connection.model('Courses', schemaCourse)
@@ -32,13 +34,12 @@ exports.courses = function(req, res) {
         if (err) {
             res.sendStatus(500)
         } else {
-            console.dir(docs)
-            res.render('activecourses', { courses: docs })
+            res.status(200).send({ courses: docs })
         }
     })
-}
+})
 
-exports.streams = function(req, res) {
+router.get('/streams', (req, res) => {
     const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
     const schemaStream = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date' })
     const streams = connection.model('Streams', schemaStream)
@@ -85,11 +86,11 @@ exports.streams = function(req, res) {
         if (err) {
             res.sendStatus(500)
         } else {
-            res.render('activestreams', { streams: docs })
+            res.status(200).send({ streams: docs })
         }
     })
-}
-exports.coursepublic = function(req, res) {
+})
+router.get('/courses/:id', (req, res) => {
     const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
     const schemaCourse = new mongoose.Schema({ Name: 'string', Description: 'string', lessons: 'array' })
     const course = connection.model('Courses', schemaCourse)
@@ -134,11 +135,11 @@ exports.coursepublic = function(req, res) {
         if (err) {
             res.sendStatus(500)
         } else {
-            res.render('publiccourse', docs[0])
+            res.status(200).send(docs[0])
         }
     }) 
-}
-exports.streampublic = function(req, res) {
+})
+router.get('/streams/:id', (req, res) => {
     const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
     const schemaStream = new mongoose.Schema({ Name: 'string', Owner: 'object', Course: 'object', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date', lessons: 'array' })
     const stream = connection.model('Streams', schemaStream)
@@ -201,7 +202,9 @@ exports.streampublic = function(req, res) {
         if (err) {
             res.sendStatus(500)
         } else {
-            res.render('publicstream', docs[0])
+            res.status(200).send(docs[0])
         }
     }) 
-}
+})
+
+module.exports = router

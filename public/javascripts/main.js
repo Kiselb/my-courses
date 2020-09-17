@@ -1,7 +1,4 @@
 var mycourses = (function() {
-
-    console.log(localStorage.getItem('mycourses.user') || "");
-
     var bodyOnLoad = function() {
         const displayName = document.getElementById('user');
         displayName.innerText = localStorage.getItem('mycourses.user') || "";
@@ -86,7 +83,6 @@ var mycourses = (function() {
         return !!localStorage.getItem('mycourses.user');
     }
     var signupStream = function(streamId) {
-        console.log('StreamID: ', streamId);
         const request = new XMLHttpRequest();
         request.open('POST', "http://127.0.0.1:5000/streams/" + streamId + "/students");
         request.setRequestHeader('Content-Type', 'application/json');
@@ -143,7 +139,6 @@ var mycourses = (function() {
         window.location.href = 'http://127.0.0.1:5000/courses/' + courseId;
     }
     var courseRemLesson = function(courseId, lesson) {
-        console.log('Removing:', courseId, lesson);
         const request = new XMLHttpRequest();
         request.open('DELETE', "http://127.0.0.1:5000/courses/" + courseId + "/lessons/" + lesson);
         request.setRequestHeader('Content-Type', 'application/json');
@@ -155,8 +150,6 @@ var mycourses = (function() {
         request.send(JSON.stringify({}));
     }
     var courseAddStreamDialog = function(courseId) {
-        console.log("Add new Course Stream");
-        
         if (!!localStorage.getItem('mycourses.course.addStream')) return;
 
         const dialog = document.getElementById('add-stream-to-course');
@@ -230,7 +223,6 @@ var mycourses = (function() {
         window.location.href = 'http://127.0.0.1:5000/streams/' + streamId;
     }
     var streamRemLesson = function(streamId, lesson) {
-        console.log('Removing:', streamId, lesson);
         const request = new XMLHttpRequest();
         request.open('DELETE', "http://127.0.0.1:5000/streams/" + streamId + "/lessons/" + lesson);
         request.setRequestHeader('Content-Type', 'application/json');

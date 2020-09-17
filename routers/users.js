@@ -5,7 +5,6 @@ const auth = require('./auth')
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    console.log(req.cookies)
     if (auth.verify(req.cookies["token"])) {
         //await mongoose.connect('mongodb://localhost/mycourses', {useNewUrlParser: true})
         const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})

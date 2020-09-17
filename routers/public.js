@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const controllers = require('../controllers/active.js')
+const controllers = require('../controllers/public.js')
 
 router.get('/courses', (req, res) => {
     controllers.courses(req, res)
@@ -14,9 +14,6 @@ router.get('/streams', (req, res) => {
 })
 router.get('/streams/:id', (req, res) => {
     controllers.streampublic(req, res)
-})
-router.post('/streams/:id', (req, res) => {
-    controllers.subscribe(req, res)
 })
 
 module.exports = router
