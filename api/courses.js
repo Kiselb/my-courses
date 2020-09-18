@@ -92,6 +92,42 @@ router.get('/:id/streams', (req, res) => {
         }
     })
 })
+router.post('/:id/streams', (req, res) => {
+    const userId =  req.mycoursesUserId
+    const courseId = req.params.id
+    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string', Lessons: 'array' })
+    const courses = connection.model('courses', schemaCourses)
+
+    const streamId = mongoose.Types.ObjectId()
+    courses.aggregate([
+        { $match: { _id: mongoose.Types.ObjectId(courseId) }},
+        { $project: {
+            _id: streamId,
+            Name: 1,
+            Owner: mongoose.Types.ObjectId(userId),
+            Course: mongoose.Types.ObjectId(courseId),
+            State: 'Draft',
+            StateInfo: 'Проектируется',
+            Start: req.body.start,
+            Finish: req.body.finish,
+            Lessons: {
+                $map: {
+                    input: '$Lessons',
+                    as: 'lessons',
+                    in: { OrderNo: '$$lessons.OrderNo', Theme: '$$lessons.Theme', Purpose: '$$lessons.Purpose', DueDate: null, Duration: 2, Materials: '$$lessons.Materials'} 
+                }
+            }
+        }},
+        { $merge: { into: 'streams', whenMatched: 'replace' }}
+    ]).exec((err, docs) => {
+        if (err) {
+            res.sendStatus(500)
+        } else {
+            res.status(200).send({ streamId: streamId })
+        }
+    })
+})
 router.post('/:id/lessons', (req, res) => {
     const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
     const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string', Lessons: 'array' })

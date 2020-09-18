@@ -34,7 +34,7 @@ router.get('/:id/streams', (req, res) => {
     controllers.courseStreams(req, res)
 })
 router.post('/:id/streams', (req, res) => {
-    res.sendStatus(200)
+   controllers.addCourseStream(req, res)
 })
 
 module.exports = router

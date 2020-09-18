@@ -182,8 +182,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 32em;
-    width: 40em;
+    height: 11.5em;
+    width: 23em;
 }
 .dialog-course-add-stream > div {
     font-family: 'Open Sans', sans-serif;
@@ -191,8 +191,8 @@ body {
     border-width: 1px;
     border-color: darkgrey;
     border-style: solid;
-    height: 32em;
-    width: 40em;
+    height: 11.5em;
+    width: 23em;
 }
 .dialog-course-add-stream-header {
     width: 100%;
@@ -222,16 +222,6 @@ body {
     width: 10em;
     font-family: inherit;
     font-size: 1em;
-}
-.dialog-course-add-stream-schedule {
-    height: 20em;
-    width: 37em;
-    margin-left: 1.5em;
-    margin-top: 0.25em;
-    background: #FFF;
-    border-style: solid;
-    border-width: 1px;
-    border-color: darkgrey;
 }
 .dialog-course-add-stream-actions {
     margin-top: 1em;

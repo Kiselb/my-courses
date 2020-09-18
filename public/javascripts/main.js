@@ -154,19 +154,25 @@ var mycourses = (function() {
 
         const dialog = document.getElementById('add-stream-to-course');
         localStorage.setItem('mycourses.course.addStream', courseId)
-
+    }
+    var courseAddStreamOK = function() {
+        const courseId = localStorage.getItem('mycourses.course.addStream');
+        if (!courseId) return;
+        localStorage.removeItem('mycourses.course.addStream');
         const request = new XMLHttpRequest();
-        request.open('GET', "http://127.0.0.1:5000/courses/" + courseId);
+        request.open('POST', "http://127.0.0.1:5000/courses/" + courseId + "/streams");
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
-                //window.location.href = 'http://127.0.0.1:5000/courses/' + courseId;
-                alert(request.responseText);
+                const streamId = JSON.parse(request.response).streamId;
+                window.location.href = 'http://127.0.0.1:5000/streams/' + streamId;
             }
         });
-        request.send(JSON.stringify({}));
-    }
-    var courseAddStreamOK = function() {
+        const dateStart = document.getElementById("dialog-course-add-stream-start").value;
+        const dateFinish = document.getElementById("dialog-course-add-stream-finish").value;
+        if (!dateStart || !dateFinish) return
+        const data = JSON.stringify({ start: dateStart, finish: dateFinish });
+        request.send(data);
     }
     var courseAddStreamCancel = function() {
         const courseId = localStorage.getItem('mycourses.course.addStream');

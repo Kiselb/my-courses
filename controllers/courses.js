@@ -10,6 +10,11 @@ exports.courseStreams = function(req, res) {
     .then(response => res.render('./private/coursestreams', response.data))
     .catch(error => res.sendStatus((error.response.status === 401)? 401 : 500))
 }
+exports.addCourseStream = function(req, res) {
+    axios.post(`http://127.0.0.1:5100/courses/${req.params.id}/streams`, req.body, { headers: { 'Authorization': req.mycoursestoken }})
+    .then(response => res.status(200).send(response.data))
+    .catch(error => res.sendStatus((error.response.status === 401)? 401 : 500))
+}
 exports.mycourses = function(req, res) {
     axios.get('http://127.0.0.1:5100/courses', { headers: { 'Authorization': req.mycoursestoken }})
     .then(response => res.render('./private/courses', response.data))

@@ -63,16 +63,6 @@ html
           label.dialog-course-add-stream-date-label
             | Окончание потока:
           input#dialog-course-add-stream-finish(type="date").dialog-course-add-stream-date
-        .dialog-course-add-stream-schedule
-          - var lessonNumber = 1
-          if lessons
-            each lesson in lessons
-              .dialog-course-add-stream-schedule-lesson
-                .dialog-course-add-stream-schedule-lesson-number #{lessonNumber}
-                .dialog-course-add-stream-schedule-lesson-theme #{lesson.Theme}
-                input.dialog-course-add-stream-schedule-lesson-date(type="date" id="stream-schedule-lesson-date-" + lessonNumber)
-                input.dialog-course-add-stream-schedule-lesson-time(type="time" id="stream-schedule-lesson-time-" + lessonNumber)
-                - lessonNumber = lessonNumbe + 1
         .dialog-course-add-stream-actions
           button(onclick='mycourses.courses.addStream.OK()') OK
           button(onclick='mycourses.courses.addStream.Cancel()') Отмена
