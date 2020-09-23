@@ -21,17 +21,26 @@ var mycourses = (function() {
         id = localStorage.getItem('mycourses.course.addLesson')
         if (!!id) {
             const dialog = document.getElementById('add-lesson-to-course');
-            dialog.classList.remove('dialog-hide')
+            dialog.classList.remove('dialog-hide');
+            return;
         }
         id = localStorage.getItem('mycourses.stream.addLesson')
         if (!!id) {
             const dialog = document.getElementById('add-lesson-to-stream');
-            dialog.classList.remove('dialog-hide')
+            dialog.classList.remove('dialog-hide');
+            return;
         }
         id = localStorage.getItem('mycourses.course.addStream')
         if (!!id) {
             const dialog = document.getElementById('add-stream-to-course');
-            dialog.classList.remove('dialog-hide')
+            dialog.classList.remove('dialog-hide');
+            return;
+        }
+        id = localStorage.getItem('mycourses.course.add')
+        if (!!id) {
+            const dialog = document.getElementById('add-course');
+            dialog.classList.remove('dialog-hide');
+            return;
         }
     }
     var login = function() {
@@ -95,6 +104,34 @@ var mycourses = (function() {
         });
         request.send(JSON.stringify({}));
     }
+    var courseAddDialog = function() {
+        const dialog = document.getElementById('add-course');
+        localStorage.setItem('mycourses.course.add', "OK");
+    }
+    var courseAddOK = function() {
+        if (!localStorage.getItem('mycourses.course.add')) return;
+        localStorage.removeItem('mycourses.course.add');
+        const request = new XMLHttpRequest();
+        request.open('POST', "http://127.0.0.1:5000/courses");
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.addEventListener("readystatechange", () => {
+            if (request.readyState === 4 && request.status === 200) {
+                const courseId = JSON.parse(request.response).courseId;
+                window.location.href = 'http://127.0.0.1:5000/courses/' + courseId;
+            }
+        });
+        const name = document.getElementById("dialog-course-add-name").value;
+        const description = document.getElementById("dialog-course-add-description").value;
+        if (!name || !description) {
+            return;
+        }
+        const data = JSON.stringify({ name: name, description: description });
+        request.send(data)
+    }
+    var courseAddCancel = function() {
+        localStorage.removeItem('mycourses.course.add');
+        window.location.reload(true);
+    }
     var courseAddLessonDialog = function(courseId) {
         const dialog = document.getElementById('add-lessson-to-course');
         localStorage.setItem('mycourses.course.addLesson', courseId)
@@ -102,9 +139,9 @@ var mycourses = (function() {
     var courseAddLessonOK = function() {
         const courseId = localStorage.getItem('mycourses.course.addLesson');
         if (!courseId) return;
+        localStorage.removeItem('mycourses.course.addLesson')
         const request = new XMLHttpRequest();
         request.open('POST', "http://127.0.0.1:5000/courses/" + courseId + "/lessons");
-        localStorage.removeItem('mycourses.course.addLesson')
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
@@ -228,6 +265,9 @@ var mycourses = (function() {
         localStorage.removeItem('mycourses.stream.addLesson');
         window.location.href = 'http://127.0.0.1:5000/streams/' + streamId;
     }
+    var streamChangeLesson = function(streamId, lessonNum) {
+        console.log("Stream Lesson Changed");
+    }
     var streamRemLesson = function(streamId, lesson) {
         const request = new XMLHttpRequest();
         request.open('DELETE', "http://127.0.0.1:5000/streams/" + streamId + "/lessons/" + lesson);
@@ -239,6 +279,21 @@ var mycourses = (function() {
         });
         request.send(JSON.stringify({}));
     }
+    var changeStream = function(streamId) {
+        console.log("Change stream: " + streamId)
+    }
+    var remStream = function(streamId) {
+        console.log("Remove stream: " + streamId)
+        const request = new XMLHttpRequest();
+        request.open('DELETE', "http://127.0.0.1:5000/streams/" + streamId);
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.addEventListener("readystatechange", () => {
+            if (request.readyState === 4 && request.status === 204) {
+                window.location.reload(true);
+            }
+        });
+        request.send(JSON.stringify({}));
+    }
     return {
         login: login,
         logout: logout,
@@ -246,6 +301,11 @@ var mycourses = (function() {
         bodyOnLoad: bodyOnLoad,
         signupStream: signupStream,
         courses: {
+            addCourse: {
+                Dialog: courseAddDialog,
+                OK: courseAddOK,
+                Cancel: courseAddCancel
+            },
             addLesson: {
                 Dialog: courseAddLessonDialog,
                 OK: courseAddLessonOK,
@@ -264,7 +324,10 @@ var mycourses = (function() {
                 OK: streamAddLessonOK,
                 Cancel: streamAddLessonCancel
             },
-            remLesson : streamRemLesson
+            changeLesson: streamChangeLesson,
+            remLesson : streamRemLesson,
+            change: changeStream,
+            remove: remStream
         }
     };
 })();

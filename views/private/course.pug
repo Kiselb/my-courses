@@ -1,19 +1,20 @@
 extends ../index
 
 block panel
-    .mycourse
-        .mycourse-name #{Name} (описание)
-        .mycourse-description #{Description}
-        .mycourse-state #{State}
-        a.mycourse-action-add(href='' onclick='mycourses.courses.addLesson.Dialog("' + _id + '")') Добавить лекцию
-        .mycourse-lessons
+    .section
+        .section-header
+            .section-header-header #{Name} (описание) (course pug)
+            .section-header-text #{Description}
+            .section-header-text.section-header-text-warning #{State}
+            a.section-header-text.section-header-text-action(href='' onclick='mycourses.courses.addLesson.Dialog("' + _id + '")') Добавить лекцию
+        .section-details
             - var orderNumber = 1
             each lesson in Lessons
                 - var materialsLink = '/courses/' + _id + '/lessons/' + orderNumber + '/materials'
-                span.mycourse-lesson-orderno #{orderNumber}
-                .mycourse-lesson-theme #{lesson.Theme}
-                .mycourse-lesson-purpose #{lesson.Purpose}
-                a.mycourse-lesson-delete(href='' onclick='mycourses.courses.remLesson("' + _id + '", ' + orderNumber + ')') Удалить
-                a.mycourse-lesson-materials(href=materialsLink) Материалы   
+                span.list-item-orderno #{orderNumber}
+                .list-item-header #{lesson.Theme}
+                .list-item-text #{lesson.Purpose}
+                a.list-item-action-first(href='' onclick='mycourses.courses.remLesson("' + _id + '", ' + orderNumber + ')') Удалить
+                a.list-item-action-next(href=materialsLink) Материалы   
                 - orderNumber = orderNumber + 1
                 br

@@ -6,6 +6,14 @@ html
     script(src='/public/javascripts/main.js')
   body(onload="mycourses.bodyOnLoad()")
     block content
+    #add-course.dialog-course-add.dialog-hide()
+      div
+        .dialog-course-add-header Регистрация курса
+        textarea#dialog-course-add-name(placeholder="Укажите название курса")
+        textarea#dialog-course-add-description(placeholder="Укажите описание курса")
+        .dialog-course-add-actions
+          button(onclick='mycourses.courses.addCourse.OK()') OK
+          button(onclick='mycourses.courses.addCourse.Cancel()') Отмена
     #add-lesson-to-course.dialog-course-add-lesson.dialog-hide()
       div
         .dialog-course-add-lesson-header Регистрация лекции курса

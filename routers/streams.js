@@ -18,6 +18,9 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
     controllers.stream(req, res)
 })
+router.delete('/:id', (req, res) => {
+    controllers.remStream(req, res)
+})
 router.get('/:id/students', (req, res) => {
     controllers.students(req, res)
 })

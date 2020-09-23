@@ -25,6 +25,11 @@ exports.stream = function(req, res) {
     .then(response => res.render('./private/stream', response.data))
     .catch(error => res.sendStatus((error.response.status === 401)? 401 : 500))
 }
+exports.remStream = function(req, res) {
+    axios.delete(`http://127.0.0.1:5100/streams/${req.params.id}`, { headers: { 'Authorization': req.mycoursestoken }})
+    .then(response => res.sendStatus(200))
+    .catch(error => res.sendStatus((error.response.status === 401)? 401 : 500))
+}
 exports.addStreamLesson = function(req, res) {
     axios.post(`http://127.0.0.1:5100/streams/${req.params.id}/lessons`, req.body, { headers: { 'Authorization': req.mycoursestoken }})
     .then(response => res.sendStatus(200))
@@ -37,6 +42,6 @@ exports.remStreamLesson = function(req, res) {
 }
 exports.students = function(req, res) {
     axios.get(`http://127.0.0.1:5100/streams/${req.params.id}/students`, { headers: { 'Authorization': req.mycoursestoken }})
-    .then(response => res.render('./private/streamstudents', response.data))
+    .then(response => { console.log(response.data); res.render('./private/streamstudents', response.data); })
     .catch(error => res.sendStatus((error.response.status === 401)? 401 : 500))
 }

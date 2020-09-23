@@ -1,17 +1,20 @@
 extends index
 
 block panel
-    .course-public-panel
-        - var ownerLink = '/users/' + OwnerId;
-        .course-public-panel-name #{Name}
-        .course-public-panel-author
-            p Автор:
-                a(href=ownerLink) #{Owner}
-        .course-public-panel-description #{Description}
-        .course-public-panel-lessons
+    .section
+        .section-header
+            - var ownerLink = '/users/' + OwnerId;
+            .section-header-header #{Name} (public course pug)
+            .section-header-text
+                p Автор:
+                    a(href=ownerLink) #{Owner}
+            .section-header-text #{Description}
+        .section-details
+            - var orderNumber = 1
             each lesson in Lessons
-                span.course-public-lesson-number #{lesson.OrderNo}
-                .course-public-lesson-theme #{lesson.Theme}
-                .course-public-lesson-purpose Цель урока: #{lesson.Purpose}
+                span.list-item-orderno #{orderNumber}
+                .list-item-header #{lesson.Theme}
+                .list-item-text Цель урока: #{lesson.Purpose}
+                - orderNumber = orderNumber + 1
                 br
 

@@ -1,17 +1,26 @@
 extends ../index
 
 block panel
-    .mycourse
-        .mycourse-name #{Name} (Потоки)
-        .mycourse-description #{Description}
-        .mycourse-state #{State}
-        a.mycourse-action-add(href='' onclick='mycourses.courses.addStream.Dialog("' + _id + '")') Добавить поток
-        .mycourse-lessons
-            - var orderNumber = 1
-            each stream in streams
-                span.mycourse-lesson-orderno #{orderNumber}
-                .mycourse-lesson-theme #{stream.Name}
-                .mycourse-stream-item #{stream.StateInfo}
-                .mycourse-stream-item #{"Длительность: с " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Start)) + " по " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Finish))}
-                - orderNumber = orderNumber + 1
-                br
+    .section
+        .section-header
+            .section-header-header #{course.Name} (Потоки)
+            .section-header-text #{course.Description}
+            .section-header-text.section-header-text-warning  #{course.State}
+            a.section-header-text.section-header-text-action(href='' onclick='mycourses.courses.addStream.Dialog("' + course._id + '")') Добавить поток
+        .section-details
+            if (streams)
+                - var orderNumber = 1
+                each stream in streams
+                    span.list-item-orderno #{orderNumber}
+                    .list-item-header #{stream.Name}
+                    .list-item-text #{stream.StateInfo}
+                    if (!stream.Start || !stream.Finish)
+                        .list-item-text #{"Период не задан"}
+                    else
+                        .list-item-text #{"Длительность: с " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Start)) + " по " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Finish))}
+                    a.list-item-action-first(href='' onclick='mycourses.streams.remove("' + stream._id + '")') Удалить
+                    a.list-item-action-next(href='' onclick='mycourses.streams.change("' + stream._id + '")') Изменить
+                    - var streamLessonsURL =  '/streams/' + stream._id + '/lessons'
+                    a.list-item-action-next(href=streamLessonsURL) Лекции
+                    - orderNumber = orderNumber + 1
+                    br

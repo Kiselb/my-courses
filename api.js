@@ -20,6 +20,7 @@ app.use(cookieParser())
 app.use(cors())
 
 app.use(['/courses', '/streams'], (req, res, next) => {
+    console.log("Header", req.header('Authorization'))
     const userId = auth.verify(req.header('Authorization'))
     if (!!userId) {
         req.mycoursesUserId = userId

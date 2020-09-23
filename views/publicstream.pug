@@ -1,18 +1,21 @@
 extends index
 
 block panel
-    .stream-public-panel
-        - var ownerLink = '/users/' + OwnerId;
-        .stream-public-panel-name #{Name}
-        .stream-public-panel-author
-            p Автор:
-                a(href=ownerLink) #{Owner}
-        .stream-public-panel-state Состояние: #{StateInfo}
-        .stream-public-panel-period #{"Длительность: с " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Start)) + " по " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Finish))}
-        .stream-public-panel-lessons
+    .section
+        .section-header
+            - var ownerLink = '/users/' + OwnerId;
+            .section-header-header #{Name} (public stream pug)
+            .section-header-text
+                p Автор:
+                    a(href=ownerLink) #{Owner}
+            .section-header-text.section-header-text-warning Состояние: #{StateInfo}
+            .section-header-text #{"Длительность: с " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Start)) + " по " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Finish))}
+        .section-details
+            - var orderNumber = 1
             each lesson in Lessons
-                span.stream-public-lesson-number #{lesson.OrderNo}
-                .stream-public-lesson-theme #{lesson.Theme}
-                .stream-public-lesson-purpose Цель урока: #{lesson.Purpose}
-                .stream-public-lesson-duedate #{'Дата проведения: ' + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }).format(new Date(lesson.DueDate)) }
+                span.list-item-orderno #{orderNumber}
+                .list-item-header #{lesson.Theme}
+                .list-item-text Цель урока: #{lesson.Purpose}
+                .list-item-text #{'Дата проведения: ' + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }).format(new Date(lesson.DueDate)) }
+                - orderNumber = orderNumber + 1
                 br

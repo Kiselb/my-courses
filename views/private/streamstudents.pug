@@ -1,15 +1,25 @@
 extends ../index
 
 block panel
-    .mystream
-        .mystream-name #{Name} (Студенты)
-        .mystream-state #{StateInfo}
-        .mystream-period #{"Длительность: с " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Start)) + " по " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(Finish))}
-        .mystream-lessons
+    .section
+        .section-header
+            .section-header-header #{stream.Name} (Студенты)
+            .section-header-text.section-header-text-warning #{stream.StateInfo}
+            if (!stream.Start || !stream.Finish)
+                .section-header-text #{"<Период обучения не задан>"}
+            else
+                .section-header-text #{"Длительность: с " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Start)) + " по " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Finish))}
+        .section-details
             - var orderNumber = 1
-            each student in students
-                span.mystream-lesson-orderno #{orderNumber}
-                .mystream-lesson-theme #{student.Name}
-                .mystream-lesson-purpose #{student.EMail}
-                - orderNumber = orderNumber + 1
-                br
+            if (users)
+                each student in users
+                    span.list-item-orderno #{orderNumber}
+                    .list-item-header #{student.Name}
+                    .list-item-text #{student.EMail}
+                    - orderNumber = orderNumber + 1
+                    br
+            else
+                p
+                | На данный поток нет записанных студентов
+            br
+            

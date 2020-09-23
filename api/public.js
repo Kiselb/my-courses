@@ -182,7 +182,7 @@ router.get('/streams/:id', (req, res) => {
                 }
             },
             { $unwind: "$Lessons" },
-            { $sort: { "Lessons.OrderNo": 1 }},
+            //{ $sort: { "Lessons.OrderNo": 1 }},
             {
                 $group: {
                     _id: "$_id",

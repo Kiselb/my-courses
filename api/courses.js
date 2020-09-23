@@ -18,6 +18,32 @@ router.get('/', (req, res) => {
         }
     })
 })
+router.post('/', (req, res) => {
+    const userId =  req.mycoursesUserId
+    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string', Lessons: 'array' })
+    const courses = connection.model('courses', schemaCourses)
+
+    const courseId = mongoose.Types.ObjectId()
+
+    courses.aggregate([
+        { $project: {
+            _id: courseId,
+            Name: req.body.name,
+            State: 'Draft',
+            Owner: mongoose.Types.ObjectId(userId),
+            Description: req.body.description,
+            Lessons: []
+        }},
+        { $merge: { into: 'courses', whenMatched: 'replace' }}
+    ]).exec((err, docs) => {
+        if (err) {
+            res.sendStatus(500)
+        } else {
+            res.status(200).send({ courseId: courseId })
+        }
+    })
+})
 router.get('/:id', (req, res) => {
     const userId =  req.mycoursesUserId
     const courseId = req.params.id
@@ -42,53 +68,33 @@ router.get('/:id', (req, res) => {
 router.get('/:id/streams', (req, res) => {
     const courseId = req.params.id
     const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string' })
+    const courses = connection.model('courses', schemaCourses)
     const schemaStreams = new mongoose.Schema({ Name: 'string', Course: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date' })
     const streams = connection.model('streams', schemaStreams)
+    const data = {}
 
-    streams.aggregate(
+    courses.aggregate(
         [
-            { $match: {  Course: mongoose.Types.ObjectId(courseId) }},
-            {
-                $project: {
-                    "Name": 1,
-                    "Owner": 1,
-                    "Course": 1,
-                    "State": 1,
-                    "StateInfo": 1,
-                    "Start": 1,
-                    "Finish": 1
-                }
-            },
-            {
-                $group: {
-                    _id: "$Course",
-                    streams: { $push: { Name: "$Name", Owner: "$Owner", State: "$State", StateInfo: "$StateInfo", Start: "$Start", Finish: "$Finish" } }
-                }
-            },
-            {
-                $lookup:
-                {
-                    from: "courses",
-                    localField: "_id",
-                    foreignField: "_id",
-                    as: "itemcourse"
-                }
-            },
-            { $unwind: "$itemcourse" },
-            {
-                $project: {
-                    Name: "$itemcourse.Name",
-                    Description: "$itemcourse.Description",
-                    State: "$itemcourse.State",
-                    streams: 1
-                }
-            },
-        ]        
+            { $match: {  _id: mongoose.Types.ObjectId(courseId) }},
+        ]
     ).exec((err, docs) => {
         if (err) {
             res.sendStatus(500)
         } else {
-            res.status(200).send(docs[0])
+            data.course = docs[0]
+            streams.aggregate(
+                [
+                    { $match: {  Course: mongoose.Types.ObjectId(courseId) }},
+                ]
+            ).exec((err, docs) => {
+                if (err) {
+                    res.sendStatus(500)
+                } else {
+                    data.streams = docs
+                    res.status(200).send(data)
+                }
+            })
         }
     })
 })
@@ -129,6 +135,7 @@ router.post('/:id/streams', (req, res) => {
     })
 })
 router.post('/:id/lessons', (req, res) => {
+    const courseId = req.params.id
     const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
     const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string', Lessons: 'array' })
     const courses = connection.model('courses', schemaCourses)

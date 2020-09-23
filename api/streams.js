@@ -38,6 +38,20 @@ router.get('/:id', (req, res) => {
         }
     })
 })
+router.delete('/:id', (req, res) => {
+    const streamId = req.params.id
+    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const schemaStreams = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date', Lessons: 'array' })
+    const streams = connection.model('streams', schemaStreams)
+
+    streams.deleteOne({ _id: mongoose.Types.ObjectId(streamId) }).exec((err, docs) => {
+        if (err) {
+            res.sendStatus(500)
+        } else {
+            res.sendStatus(200)
+        }
+    })
+})
 router.post('/:id/lessons', (req, res) => {
     const streamId = req.params.id
     const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
@@ -136,53 +150,33 @@ router.delete('/:id/lessons/:num', (req, res) => {
 router.get('/:id/students', (req, res) => {
     const streamId = req.params.id
     const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
-    const schemaUsers = new mongoose.Schema({ Name: 'string', EMail: 'string', streams: 'array' })
-    const users = connection.model('users', schemaUsers)
+    const schemaStreams = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date' })
+    const streams = connection.model('streams', schemaStreams)
+    const data = {}
 
-    users.aggregate(
+    streams.aggregate(
         [
-            { $match: { streams: { $elemMatch: { $eq: mongoose.Types.ObjectId(streamId) }}}},
-            {
-                $project: {
-                    "streams": 1,
-                    "Name": 1,
-                    "EMail": 1
-                }
-            },
-            {
-                $group: {
-                    _id: "$streams",
-                    students: { $push: { Name: "$Name", EMail: "$EMail" } }
-                }
-            },
-            { $unwind: "$_id"},
-            {
-                $lookup:
-                {
-                    from: "streams",
-                    localField: "_id",
-                    foreignField: "_id",
-                    as: "itemstream"
-                }
-            },
-            { $unwind: "$itemstream" },
-            {
-                $project: {
-                    Name: "$itemstream.Name",
-                    State: "$itemstream.State",
-                    StateInfo: "$itemstream.StateInfo",
-                    Course: "$itemstream.Course",
-                    Start: "$itemstream.Start",
-                    Finish: "$itemstream.Finish",
-                    students: 1
-                }
-            }
+            { $match: { _id: mongoose.Types.ObjectId(streamId) }},
         ]        
     ).exec((err, docs) => {
         if (err) {
             res.sendStatus(500)
         } else {
-            res.status(200).send(docs[0])
+            data.stream = docs[0]
+            const schemaUsers = new mongoose.Schema({ Name: 'string', EMail: 'string'})
+            const users = connection.model('users', schemaUsers)
+            users.aggregate(
+                [
+                    { $match: { streams: { $elemMatch: { $eq: mongoose.Types.ObjectId(streamId) }}}},
+                ]
+            ).exec((err, docs) => {
+                if (err) {
+                    res.sendStatus(500)
+                } else {
+                    data.users = docs
+                    res.status(200).send(data)
+                }
+            })
         }
     })
 })

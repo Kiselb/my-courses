@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     controllers.mycourses(req, res)
 })
 router.post('/', (req, res) => {
-    res.sendStatus(200)
+    controllers.addCourse(req, res)
 })
 router.get('/:id', (req, res) => {
     controllers.course(req, res)

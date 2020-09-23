@@ -1,14 +1,17 @@
 extends ../index
 
 block panel
-    .mycourses
-        .mycourses-header Мои Курсы
-        .mycourses-courses
+    .section
+        .section-header
+            .section-header-header Мои Курсы
+            a.section-header-text.section-header-text-action(href='' onclick='mycourses.courses.addCourse.Dialog()') Добавить курс
+        .section-details
             each course in courses
-                .mycourses-course
-                    - var streamsLink = '/courses/' + course._id + '/streams'
-                    - var courseLections = '/courses/' + course._id + '/lessons'
-                    .mycourses-course-name #{course.Name}
-                    .mycourses-course-description #{course.Description}
-                    a.mycourses-course-streams(href=streamsLink) Потоки   
-                    a.mycourses-course-lections(href=courseLections) Лекции   
+                - var streamsLink = '/courses/' + course._id + '/streams'
+                - var courseLections = '/courses/' + course._id + '/lessons'
+                span.list-item-orderno #{' '}
+                .list-item-header #{course.Name}
+                .list-item-text #{course.Description}
+                a.list-item-text.list-item-action-first(href=streamsLink) Потоки   
+                a.list-item-text.list-item-action-next(href=courseLections) Лекции   
+                br
