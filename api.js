@@ -7,8 +7,9 @@ const cors = require('cors')
 const auth = require('./routers/auth')
 const public = require('./api/public')
 const courses = require('./api/courses')
-const streams = require('./api/streams.js')
-//const users = require('./api/users.js')
+const streams = require('./api/streams')
+//const users = require('./api/users')
+const login = require('./api/login')
 
 const app = express()
 
@@ -33,6 +34,7 @@ app.use(['/courses', '/streams'], (req, res, next) => {
 app.use('/public', public)
 app.use('/courses', courses)
 app.use('/streams', streams)
-// app.use('/users', users)
+//app.use('/users', users)
+app.use('/login', login)
 
 app.listen(5100, () => console.log('API Running on Port 5100'))

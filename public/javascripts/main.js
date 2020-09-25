@@ -42,6 +42,18 @@ var mycourses = (function() {
             dialog.classList.remove('dialog-hide');
             return;
         }
+        id = localStorage.getItem('mycourses.course.change')
+        if (!!id) {
+            const dialog = document.getElementById('change-course');
+            dialog.classList.remove('dialog-hide');
+            return;
+        }
+        id = localStorage.getItem('mycourses.stream.change')
+        if (!!id) {
+            const dialog = document.getElementById('change-stream');
+            dialog.classList.remove('dialog-hide');
+            return;
+        }
     }
     var login = function() {
         const name = document.getElementById('name').value;
@@ -106,7 +118,7 @@ var mycourses = (function() {
     }
     var courseAddDialog = function() {
         const dialog = document.getElementById('add-course');
-        localStorage.setItem('mycourses.course.add', "OK");
+        localStorage.setItem('mycourses.course.add', "ADD");
     }
     var courseAddOK = function() {
         if (!localStorage.getItem('mycourses.course.add')) return;
@@ -130,6 +142,48 @@ var mycourses = (function() {
     }
     var courseAddCancel = function() {
         localStorage.removeItem('mycourses.course.add');
+        window.location.reload(true);
+    }
+    var courseChangeDialog = function(courseId) {
+        const dialog = document.getElementById('change-course');
+        const request = new XMLHttpRequest();
+        request.open('GET', "http://127.0.0.1:5000/courses/" + courseId);
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.addEventListener("readystatechange", () => {
+            if (request.readyState === 4 && request.status === 200) {
+                const dialog = document.getElementById('change-course');
+                dialog.classList.remove('dialog-hide');
+                const data = JSON.parse(request.response);
+                console.log(data.Name, data.Description)
+                document.getElementById('dialog-course-change-name').value = data.Name;
+                document.getElementById('dialog-course-change-description').value = data.Description;
+                localStorage.setItem('mycourses.course.change', courseId);
+            }
+        });
+        request.send({});
+    }
+    var courseChangeOK = function() {
+        const courseId = localStorage.getItem('mycourses.course.change');
+        if (!courseId) return;
+        localStorage.removeItem('mycourses.course.change');
+        const request = new XMLHttpRequest();
+        request.open('PUT', "http://127.0.0.1:5000/courses/" + courseId);
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.addEventListener("readystatechange", () => {
+            if (request.readyState === 4 && request.status === 200) {
+                window.location.reload(true);
+            }
+        });
+        const name = document.getElementById("dialog-course-change-name").value;
+        const description = document.getElementById("dialog-course-change-description").value;
+        if (!name || !description) {
+            return;
+        }
+        const data = JSON.stringify({ name: name, description: description });
+        request.send(data)
+    }
+    var courseChangeCancel = function() {
+        localStorage.removeItem('mycourses.course.change');
         window.location.reload(true);
     }
     var courseAddLessonDialog = function(courseId) {
@@ -279,8 +333,36 @@ var mycourses = (function() {
         });
         request.send(JSON.stringify({}));
     }
-    var changeStream = function(streamId) {
-        console.log("Change stream: " + streamId)
+    var changeStreamDialog = function(streamId) {
+        const dialog = document.getElementById('change-stream');
+        localStorage.setItem('mycourses.stream.change', streamId);
+    }
+    var changeStreamOK = function() {
+        const streamId = localStorage.getItem('mycourses.stream.change');
+        if (!streamId) return;
+        localStorage.removeItem('mycourses.stream.change');
+        const request = new XMLHttpRequest();
+        request.open('PUT', "http://127.0.0.1:5000/streams/" + streamId);
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.addEventListener("readystatechange", () => {
+            if (request.readyState === 4 && request.status === 200) {
+                console.log("Reloaded")
+                window.location.reload(true);
+                //window.location.href = 'http://127.0.0.1:5000/streams'
+            }
+        });
+        const start = document.getElementById("dialog-stream-change-start").value;
+        const finish = document.getElementById("dialog-stream-change-finish").value;
+        if (!start || !finish) {
+            return;
+        }
+        console.log("Send request")
+        request.send(JSON.stringify({ start: start, finish: finish }));
+    }
+    var changeStreamCancel = function() {
+        const streamId = localStorage.getItem('mycourses.stream.change');
+        localStorage.removeItem('mycourses.stream.change');
+        window.location.reload(true);
     }
     var remStream = function(streamId) {
         console.log("Remove stream: " + streamId)
@@ -306,6 +388,11 @@ var mycourses = (function() {
                 OK: courseAddOK,
                 Cancel: courseAddCancel
             },
+            changeCourse: {
+                Dialog: courseChangeDialog,
+                OK: courseChangeOK,
+                Cancel: courseChangeCancel
+            },
             addLesson: {
                 Dialog: courseAddLessonDialog,
                 OK: courseAddLessonOK,
@@ -326,8 +413,12 @@ var mycourses = (function() {
             },
             changeLesson: streamChangeLesson,
             remLesson : streamRemLesson,
-            change: changeStream,
-            remove: remStream
+            changeStream: {
+                Dialog: changeStreamDialog,
+                OK: changeStreamOK,
+                Cancel: changeStreamCancel
+            },
+            removeStream: remStream
         }
     };
 })();

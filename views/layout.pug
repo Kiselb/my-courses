@@ -14,6 +14,14 @@ html
         .dialog-course-add-actions
           button(onclick='mycourses.courses.addCourse.OK()') OK
           button(onclick='mycourses.courses.addCourse.Cancel()') Отмена
+    #change-course.dialog-course-add.dialog-hide()
+      div
+        .dialog-course-add-header Изменение курса
+        textarea#dialog-course-change-name(placeholder="Укажите название курса")
+        textarea#dialog-course-change-description(placeholder="Укажите описание курса")
+        .dialog-course-add-actions
+          button(onclick='mycourses.courses.changeCourse.OK()') OK
+          button(onclick='mycourses.courses.changeCourse.Cancel()') Отмена
     #add-lesson-to-course.dialog-course-add-lesson.dialog-hide()
       div
         .dialog-course-add-lesson-header Регистрация лекции курса
@@ -74,3 +82,17 @@ html
         .dialog-course-add-stream-actions
           button(onclick='mycourses.courses.addStream.OK()') OK
           button(onclick='mycourses.courses.addStream.Cancel()') Отмена
+    #change-stream.dialog-stream-change.dialog-hide.dialog-hide()
+      div
+        .dialog-course-add-stream-header Изменение потока курса
+        p.dialog-stream-change-params
+          label.dialog-stream-change-date-label
+            | Начало потока:
+          input#dialog-stream-change-start(type="date").dialog-stream-change-date
+        p.dialog-stream-change-params
+          label.dialog-stream-change-date-label
+            | Окончание потока:
+          input#dialog-stream-change-finish(type="date").dialog-stream-change-date
+        .dialog-stream-change-actions
+          button(onclick='mycourses.streams.changeStream.OK()') OK
+          button(onclick='mycourses.streams.changeStream.Cancel()') Отмена

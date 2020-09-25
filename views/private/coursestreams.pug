@@ -18,8 +18,8 @@ block panel
                         .list-item-text #{"Период не задан"}
                     else
                         .list-item-text #{"Длительность: с " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Start)) + " по " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Finish))}
-                    a.list-item-action-first(href='' onclick='mycourses.streams.remove("' + stream._id + '")') Удалить
-                    a.list-item-action-next(href='' onclick='mycourses.streams.change("' + stream._id + '")') Изменить
+                    a.list-item-action-first(href='' onclick='mycourses.streams.removeStream("' + stream._id + '")') Удалить
+                    a.list-item-action-next(href='' onclick='mycourses.streams.changeStream.Dialog("' + stream._id + '")') Изменить
                     - var streamLessonsURL =  '/streams/' + stream._id + '/lessons'
                     a.list-item-action-next(href=streamLessonsURL) Лекции
                     - orderNumber = orderNumber + 1

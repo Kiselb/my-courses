@@ -12,6 +12,7 @@ block panel
                 span.list-item-orderno #{' '}
                 .list-item-header #{course.Name}
                 .list-item-text #{course.Description}
-                a.list-item-text.list-item-action-first(href=streamsLink) Потоки   
+                span.list-item-text.list-item-action-first(onclick='mycourses.courses.changeCourse.Dialog("' + course._id + '")') Изменить   
+                a.list-item-text.list-item-action-next(href=streamsLink) Потоки   
                 a.list-item-text.list-item-action-next(href=courseLections) Лекции   
                 br

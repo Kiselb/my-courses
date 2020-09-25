@@ -12,6 +12,9 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
     controllers.course(req, res)
 })
+router.put('/:id', (req, res) => {
+    controllers.updateCourse(req, res)
+})
 router.get('/:id/lessons', (req, res) => {
     controllers.course(req, res)
 })

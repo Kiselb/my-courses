@@ -38,6 +38,28 @@ router.get('/:id', (req, res) => {
         }
     })
 })
+router.put('/:id', (req, res) => {
+    const streamId = req.params.id
+    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const schemaStreams = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date', Lessons: 'array' })
+    const streams = connection.model('streams', schemaStreams)
+
+    streams.updateOne(
+        { _id: mongoose.Types.ObjectId(streamId) },
+        [{ $set: { Start: req.body.start, Finish: req.body.finish }}] //Name: req.body.name, 
+    ).exec(
+        function(err, docs) {
+        if (err) {
+            res.sendStatus(500)
+        } else {
+            if (!docs) {
+                res.sendStatus(404)
+            } else {
+                res.status(200).send({ streamId: streamId })
+            }
+        }
+    })
+})
 router.delete('/:id', (req, res) => {
     const streamId = req.params.id
     const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})

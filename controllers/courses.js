@@ -2,11 +2,22 @@ const axios = require('axios')
 
 exports.course = function(req, res) {
     axios.get(`http://127.0.0.1:5100/courses/${req.params.id}`, { headers: { 'Authorization': req.mycoursestoken }})
-    .then(response => res.render('./private/course', response.data))
+    .then(response => {
+        if (req.header('Content-Type') === 'application/json') {
+            res.status(200).send(response.data)            
+        } else {
+            res.render('./private/course', response.data);
+        }
+    })
     .catch(error => res.sendStatus((error.response.status === 401)? 401 : 500))
 }
 exports.addCourse = function(req, res) {
     axios.post(`http://127.0.0.1:5100/courses`, req.body, { headers: { 'Authorization': req.mycoursestoken }})
+    .then(response => res.status(200).send(response.data))
+    .catch(error => res.sendStatus((error.response.status === 401)? 401 : 500))
+}
+exports.updateCourse = function(req, res) {
+    axios.put(`http://127.0.0.1:5100/courses/${req.params.id}`, req.body, { headers: { 'Authorization': req.mycoursestoken }})
     .then(response => { console.log(response.data); res.status(200).send(response.data); })
     .catch(error => res.sendStatus((error.response.status === 401)? 401 : 500))
 }

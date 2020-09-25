@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string' })
     const courses = connection.model('courses', schemaCourses)
 
-    courses.find({ Owner: mongoose.Types.ObjectId(userId), State: { $eq: 'Active' }}).sort({ Name: 1 }).exec(
+    courses.find({ Owner: mongoose.Types.ObjectId(userId), State: { $in: ['Draft', 'Active'] }}).sort({ Name: 1 }).exec(
         function(err, docs) {
         if (err) {
             res.sendStatus(500)
@@ -62,6 +62,24 @@ router.get('/:id', (req, res) => {
             } else {
                 res.status(200).send(docs)
             }
+        }
+    })
+})
+router.put('/:id', (req, res) => {
+    const userId =  req.mycoursesUserId
+    const courseId = req.params.id
+    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string', Lessons: 'array' })
+    const courses = connection.model('courses', schemaCourses)
+
+    courses.updateOne(
+        {  _id: mongoose.Types.ObjectId(courseId) },
+        [{ $set: { Name: req.body.name, Description: req.body.description }}]
+    ).exec((err, docs) => {
+        if (err) {
+            res.sendStatus(500)
+        } else {
+            res.status(200).send({ courseId: courseId })
         }
     })
 })

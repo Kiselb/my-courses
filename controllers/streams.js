@@ -25,6 +25,11 @@ exports.stream = function(req, res) {
     .then(response => res.render('./private/stream', response.data))
     .catch(error => res.sendStatus((error.response.status === 401)? 401 : 500))
 }
+exports.updateStream = function(req, res) {
+    axios.put(`http://127.0.0.1:5100/streams/${req.params.id}`, req.body, { headers: { 'Authorization': req.mycoursestoken }})
+    .then(response => res.status(200).send(response.data))
+    .catch(error => res.sendStatus((error.response.status === 401)? 401 : 500))
+}
 exports.remStream = function(req, res) {
     axios.delete(`http://127.0.0.1:5100/streams/${req.params.id}`, { headers: { 'Authorization': req.mycoursestoken }})
     .then(response => res.sendStatus(200))

@@ -13,7 +13,8 @@ block panel
                 .list-item-header #{stream.Name}
                 .list-item-text #{stream.StateInfo}
                 .list-item-text #{"Длительность: с " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Start)) + " по " + new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(stream.Finish))}       
-                a.list-item-action-first(href=courseLink) Курс
+                a.list-item-action-first(href='' onclick='mycourses.streams.changeStream.Dialog("' + stream._id + '")') Изменить
+                a.list-item-action-next(href=courseLink) Курс
                 a.list-item-action-next(href=streamStudents) Студенты   
                 a.list-item-action-next(href=streamLections) Лекции
                 br

@@ -18,6 +18,9 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
     controllers.stream(req, res)
 })
+router.put('/:id', (req, res) => {
+    controllers.updateStream(req, res)
+})
 router.delete('/:id', (req, res) => {
     controllers.remStream(req, res)
 })
