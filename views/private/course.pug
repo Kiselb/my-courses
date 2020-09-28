@@ -14,7 +14,7 @@ block panel
                 span.list-item-orderno #{orderNumber}
                 .list-item-header #{lesson.Theme}
                 .list-item-text #{lesson.Purpose}
-                a.list-item-action-first(href='' onclick='mycourses.courses.remLesson("' + _id + '", ' + orderNumber + ')') Удалить
+                span.list-item-action-first(onclick='mycourses.courses.remLesson("' + _id + '", ' + orderNumber + ')') Удалить
                 a.list-item-action-next(href=materialsLink) Материалы   
                 - orderNumber = orderNumber + 1
                 br

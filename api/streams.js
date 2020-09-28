@@ -3,9 +3,11 @@ const mongoose = require('mongoose')
 
 const router = express.Router()
 
+const { DB_PATH, DB_PORT } = require('../config.js')
+
 router.get('/', (req, res) => {
     const userId = req.mycoursesUserId
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', { useNewUrlParser: true })
+    const connection = mongoose.createConnection(DB_PATH, { useNewUrlParser: true })
     const schemaStreams = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Course: 'object', Start: 'date', Finish: 'date' })
     const streams = connection.model('streams', schemaStreams)
 
@@ -20,7 +22,7 @@ router.get('/', (req, res) => {
 })
 router.get('/:id', (req, res) => {
     const streamId = req.params.id
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaStreams = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date', Lessons: 'array' })
     const streams = connection.model('streams', schemaStreams)
 
@@ -40,7 +42,7 @@ router.get('/:id', (req, res) => {
 })
 router.put('/:id', (req, res) => {
     const streamId = req.params.id
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaStreams = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date', Lessons: 'array' })
     const streams = connection.model('streams', schemaStreams)
 
@@ -62,7 +64,7 @@ router.put('/:id', (req, res) => {
 })
 router.delete('/:id', (req, res) => {
     const streamId = req.params.id
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaStreams = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date', Lessons: 'array' })
     const streams = connection.model('streams', schemaStreams)
 
@@ -76,7 +78,7 @@ router.delete('/:id', (req, res) => {
 })
 router.post('/:id/lessons', (req, res) => {
     const streamId = req.params.id
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaStreams = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date', Lessons: 'array' })
     const streams = connection.model('streams', schemaStreams)
 
@@ -140,7 +142,7 @@ router.post('/:id/lessons', (req, res) => {
 router.delete('/:id/lessons/:num', (req, res) => {
     const streamId = req.params.id
     const lessonNo = req.params.num
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaStreams = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date', Lessons: 'array' })
     const streams = connection.model('streams', schemaStreams)
 
@@ -171,7 +173,7 @@ router.delete('/:id/lessons/:num', (req, res) => {
 })
 router.get('/:id/students', (req, res) => {
     const streamId = req.params.id
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaStreams = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date' })
     const streams = connection.model('streams', schemaStreams)
     const data = {}
@@ -205,7 +207,7 @@ router.get('/:id/students', (req, res) => {
 router.post('/:id/students', (req, res) => {
     const userId =  req.mycoursesUserId
     const streamId = req.params.id
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaUser = new mongoose.Schema({ Name: 'string', streams: 'array' })
     const users = connection.model('Users', schemaUser)
 
@@ -229,7 +231,7 @@ router.post('/:id/students', (req, res) => {
     })
 })
 router.get('/:id/subscribeinfo', (req, res) => {
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaStream = new mongoose.Schema({ Name: 'string', Owner: 'string', OwnerId: 'object', CourseId: 'object', Start: 'date', Finish: 'date' })
     const streams = connection.model('streams', schemaStream)
     const streamId = req.params.id
@@ -281,7 +283,7 @@ router.get('/:id/subscribeinfo', (req, res) => {
     })    
 })
 router.get('/:id/subscribewarning', (req, res) => {
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaStream = new mongoose.Schema({ Name: 'string', Owner: 'string', OwnerId: 'object', CourseId: 'object', Start: 'date', Finish: 'date' })
     const streams = connection.model('streams', schemaStream)
     const streamId = req.params.id

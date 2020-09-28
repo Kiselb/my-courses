@@ -3,9 +3,11 @@ const mongoose = require('mongoose')
 
 const router = express.Router()
 
+const { DB_PATH, DB_PORT } = require('../config.js')
+
 router.get('/', (req, res) => {
     const userId =  req.mycoursesUserId
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string' })
     const courses = connection.model('courses', schemaCourses)
 
@@ -20,7 +22,7 @@ router.get('/', (req, res) => {
 })
 router.post('/', (req, res) => {
     const userId =  req.mycoursesUserId
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string', Lessons: 'array' })
     const courses = connection.model('courses', schemaCourses)
 
@@ -47,7 +49,7 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res) => {
     const userId =  req.mycoursesUserId
     const courseId = req.params.id
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string', Lessons: 'array' })
     const courses = connection.model('courses', schemaCourses)
 
@@ -68,7 +70,7 @@ router.get('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
     const userId =  req.mycoursesUserId
     const courseId = req.params.id
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string', Lessons: 'array' })
     const courses = connection.model('courses', schemaCourses)
 
@@ -85,7 +87,7 @@ router.put('/:id', (req, res) => {
 })
 router.get('/:id/streams', (req, res) => {
     const courseId = req.params.id
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string' })
     const courses = connection.model('courses', schemaCourses)
     const schemaStreams = new mongoose.Schema({ Name: 'string', Course: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date' })
@@ -119,7 +121,7 @@ router.get('/:id/streams', (req, res) => {
 router.post('/:id/streams', (req, res) => {
     const userId =  req.mycoursesUserId
     const courseId = req.params.id
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string', Lessons: 'array' })
     const courses = connection.model('courses', schemaCourses)
 
@@ -154,7 +156,7 @@ router.post('/:id/streams', (req, res) => {
 })
 router.post('/:id/lessons', (req, res) => {
     const courseId = req.params.id
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string', Lessons: 'array' })
     const courses = connection.model('courses', schemaCourses)
 
@@ -218,7 +220,7 @@ router.post('/:id/lessons', (req, res) => {
 router.delete('/:id/lessons/:num', (req, res) => {
     const courseId = req.params.id
     const lessonNo = req.params.num
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true, useFindAndModify: false})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true, useFindAndModify: false})
     const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string', Lessons: 'array' })
     const courses = connection.model('courses', schemaCourses)
 
@@ -238,7 +240,7 @@ router.delete('/:id/lessons/:num', (req, res) => {
                             if (err) {
                                 res.sendStatus(500)
                             } else {
-                                res.sendStatus(204)
+                                res.sendStatus(200)
                             }
                         })
                     }

@@ -37,4 +37,6 @@ app.use('/streams', streams)
 //app.use('/users', users)
 app.use('/login', login)
 
-app.listen(5100, () => console.log('API Running on Port 5100'))
+const { API_PORT } = require('./config')   
+
+app.listen(API_PORT, () => console.log(`API Running on Port ${API_PORT}`))

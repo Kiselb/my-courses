@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
 
+const { DB_PATH, DB_PORT } = require('../config.js')
 const RSA_KEYS = require('./rsakeys.js')
 
 exports.verify = (token) => {
@@ -12,7 +13,7 @@ exports.verify = (token) => {
 }
 exports.login = async (name, password) => {
     //await mongoose.connect('mongodb://localhost/mycourses', {useNewUrlParser: true})
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaUser = new mongoose.Schema({Name: 'string', EMail: 'string', Password: 'string'})
     const users = connection.model('Users', schemaUser)
     const userId = await users.findOne({ $and: [{Name: name}, {Password: password}]}).select({ _id: 1}).exec()

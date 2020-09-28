@@ -230,12 +230,16 @@ var mycourses = (function() {
         window.location.href = 'http://127.0.0.1:5000/courses/' + courseId;
     }
     var courseRemLesson = function(courseId, lesson) {
+        if (!!localStorage.getItem('mycourses.course.remLesson')) return;
+        localStorage.setItem('mycourses.course.remLesson', courseId + '@' + lesson)
         const request = new XMLHttpRequest();
         request.open('DELETE', "http://127.0.0.1:5000/courses/" + courseId + "/lessons/" + lesson);
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener("readystatechange", () => {
-            if (request.readyState === 4 && request.status === 204) {
-                window.location.href = 'http://127.0.0.1:5000/courses/' + courseId;
+            if (request.readyState === 4 && request.status === 200) {
+                //window.location.href = 'http://127.0.0.1:5000/courses/' + courseId;
+                window.location.reload(true);
+                localStorage.removeItem('mycourses.course.remLesson');
             }
         });
         request.send(JSON.stringify({}));
@@ -346,9 +350,7 @@ var mycourses = (function() {
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener("readystatechange", () => {
             if (request.readyState === 4 && request.status === 200) {
-                console.log("Reloaded")
                 window.location.reload(true);
-                //window.location.href = 'http://127.0.0.1:5000/streams'
             }
         });
         const start = document.getElementById("dialog-stream-change-start").value;
@@ -356,7 +358,6 @@ var mycourses = (function() {
         if (!start || !finish) {
             return;
         }
-        console.log("Send request")
         request.send(JSON.stringify({ start: start, finish: finish }));
     }
     var changeStreamCancel = function() {

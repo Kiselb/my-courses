@@ -14,6 +14,8 @@ const routersLogout = require('./routers/logout.js')
 
 const app = express()
 
+const { FE_PORT } = require('./config')   
+
 app.set('views', './views')
 app.set('view engine', 'pug')
 
@@ -50,4 +52,5 @@ app.use('/users', routersUsers)
 app.use('/login', routersLogin)
 app.use('/logout', routersLogout)
 
-app.listen(5000, () => console.log('Running on Port 5000'))
+app.listen(FE_PORT, () => console.log(`Running on Port ${FE_PORT}`))
+

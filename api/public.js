@@ -2,9 +2,10 @@ const express = require('express')
 const mongoose = require('mongoose')
 
 const router = express.Router()
+const { DB_PATH, DB_PORT } = require('../config.js')
 
 router.get('/courses', (req, res) => {
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaCourse = new mongoose.Schema({ Name: 'string', State: 'string', Owner: 'string' })
     const courses = connection.model('Courses', schemaCourse)
     
@@ -40,7 +41,7 @@ router.get('/courses', (req, res) => {
 })
 
 router.get('/streams', (req, res) => {
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaStream = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date' })
     const streams = connection.model('Streams', schemaStream)
     
@@ -91,7 +92,7 @@ router.get('/streams', (req, res) => {
     })
 })
 router.get('/courses/:id', (req, res) => {
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaCourse = new mongoose.Schema({ Name: 'string', Description: 'string', lessons: 'array' })
     const course = connection.model('Courses', schemaCourse)
 
@@ -140,7 +141,7 @@ router.get('/courses/:id', (req, res) => {
     }) 
 })
 router.get('/streams/:id', (req, res) => {
-    const connection = mongoose.createConnection('mongodb://localhost/mycourses', {useNewUrlParser: true})
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
     const schemaStream = new mongoose.Schema({ Name: 'string', Owner: 'object', Course: 'object', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date', lessons: 'array' })
     const stream = connection.model('Streams', schemaStream)
 
