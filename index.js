@@ -53,4 +53,3 @@ app.use('/login', routersLogin)
 app.use('/logout', routersLogout)
 
 app.listen(FE_PORT, () => console.log(`Running on Port ${FE_PORT}`))
-
