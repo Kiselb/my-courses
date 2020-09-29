@@ -33,8 +33,10 @@ router.get('/courses', (req, res) => {
          ]        
     ).exec((err, docs) => {
         if (err) {
+            connection.close()
             res.sendStatus(500)
         } else {
+            connection.close()
             res.status(200).send({ courses: docs })
         }
     })
@@ -85,8 +87,10 @@ router.get('/streams', (req, res) => {
         ]        
     ).exec((err, docs) => {
         if (err) {
+            connection.close()
             res.sendStatus(500)
         } else {
+            connection.close()
             res.status(200).send({ streams: docs })
         }
     })
@@ -134,8 +138,10 @@ router.get('/courses/:id', (req, res) => {
         ]        
     ).exec((err, docs) => {
         if (err) {
+            connection.close()
             res.sendStatus(500)
         } else {
+            connection.close()
             res.status(200).send(docs[0])
         }
     }) 
@@ -201,8 +207,10 @@ router.get('/streams/:id', (req, res) => {
         ]        
     ).exec((err, docs) => {
         if (err) {
+            connection.close()
             res.sendStatus(500)
         } else {
+            connection.close()
             res.status(200).send(docs[0])
         }
     }) 

@@ -14,8 +14,10 @@ router.get('/', (req, res) => {
     streams.find({ Owner: mongoose.Types.ObjectId(userId), State: { $in: ['Draft', 'Active', 'Pending'] }}).sort({ Name: 1 }).exec(
         function(err, docs) {
         if (err) {
+            connection.close()
             res.sendStatus(500)
         } else {
+            connection.close()
             res.status(200).send({ streams: docs })
         }
     })
@@ -30,11 +32,14 @@ router.get('/:id', (req, res) => {
     ).exec(
         function(err, docs) {
         if (err) {
+            connection.close()
             res.sendStatus(500)
         } else {
             if (!docs) {
+                connection.close()
                 res.sendStatus(404)
             } else {
+                connection.close()
                 res.status(200).send(docs)
             }
         }
@@ -52,11 +57,14 @@ router.put('/:id', (req, res) => {
     ).exec(
         function(err, docs) {
         if (err) {
+            connection.close()
             res.sendStatus(500)
         } else {
             if (!docs) {
+                connection.close()
                 res.sendStatus(404)
             } else {
+                connection.close()
                 res.status(200).send({ streamId: streamId })
             }
         }
@@ -70,8 +78,10 @@ router.delete('/:id', (req, res) => {
 
     streams.deleteOne({ _id: mongoose.Types.ObjectId(streamId) }).exec((err, docs) => {
         if (err) {
+            connection.close()
             res.sendStatus(500)
         } else {
+            connection.close()
             res.sendStatus(200)
         }
     })
@@ -84,13 +94,16 @@ router.post('/:id/lessons', (req, res) => {
 
     streams.findOne({ _id: mongoose.Types.ObjectId(streamId) }).exec((err, docs) => {
         if (err) {
+            connection.close()
             res.sendStatus(500)
         } else {
             if (!docs) {
+                connection.close()
                 res.sendStatus(404)
                 return
             }
             if (typeof req.body.type === "undefined") {
+                connection.close()
                 res.sendStatus(400)
                 return
             }
@@ -101,8 +114,10 @@ router.post('/:id/lessons', (req, res) => {
                     { $push: { Lessons: { $each: [{ OrderNo: 1, Theme: req.body.theme, Purpose: req.body.purpose, Duration: 2, DueDate: req.body.dueDate, Materials: [] }], $position: 0 }}}
                 ).exec((err, docs) => {
                     if (err) {
+                        connection.close()
                         res.sendStatus(500)
                     } else {
+                        connection.close()
                         res.sendStatus(200)
                     }
                 })
@@ -112,13 +127,16 @@ router.post('/:id/lessons', (req, res) => {
                     { $push: { Lessons: {OrderNo: 1, Theme: req.body.theme, Purpose: req.body.purpose, Duration: 2, DueDate: req.body.dueDate, Materials: []}}}
                 ).exec((err, docs) => {
                     if (err) {
+                        connection.close()
                         res.sendStatus(500)
                     } else {
+                        connection.close()
                         res.sendStatus(200)
                     }
                 })
             } else if (type > 0) {
                 if (typeof req.body.position === "undefined") {
+                    connection.close()
                     sendStatus(400)
                     return
                 }
@@ -128,12 +146,15 @@ router.post('/:id/lessons', (req, res) => {
                     { $push: { Lessons: { $each: [{OrderNo: 1, Theme: req.body.theme, Purpose: req.body.purpose, Duration: 2, DueDate: req.body.dueDate, Materials: [] }], $position: position - 1 }}}
                 ).exec((err, docs) => {
                     if (err) {
+                        connection.close()
                         res.sendStatus(500)
                     } else {
+                        connection.close()
                         res.sendStatus(200)
                     }
                 })
             } else {
+                connection.close()
                 res.sendStatus(400)
             }
         }
@@ -148,20 +169,25 @@ router.delete('/:id/lessons/:num', (req, res) => {
 
     streams.findOne({ _id: mongoose.Types.ObjectId(streamId) }).exec((err, docs) => {
         if (err) {
+            connection.close()
             res.sendStatus(500)
         } else {
             if (!docs) {
+                connection.close()
                 res.sendStatus(404)
             } else {
                 const arrayIndex = `Lessons.${lessonNo - 1}`
                 streams.findOneAndUpdate({ _id: mongoose.Types.ObjectId(streamId)}, { $unset: { [arrayIndex]: 1 }}).exec((err, docs) => {
                     if (err) {
+                        connection.close()
                         res.sendStatus(500)
                     } else {
                         streams.findOneAndUpdate({ _id: mongoose.Types.ObjectId(streamId) }, { $pull: { "Lessons": null }}).exec((err, docs) => {
                             if (err) {
+                                connection.close()
                                 res.sendStatus(500)
                             } else {
+                                connection.close()
                                 res.sendStatus(200)
                             }
                         })
@@ -184,6 +210,7 @@ router.get('/:id/students', (req, res) => {
         ]        
     ).exec((err, docs) => {
         if (err) {
+            connection.close()
             res.sendStatus(500)
         } else {
             data.stream = docs[0]
@@ -195,9 +222,11 @@ router.get('/:id/students', (req, res) => {
                 ]
             ).exec((err, docs) => {
                 if (err) {
+                    connection.close()
                     res.sendStatus(500)
                 } else {
                     data.users = docs
+                    connection.close()
                     res.status(200).send(data)
                 }
             })
@@ -213,16 +242,20 @@ router.post('/:id/students', (req, res) => {
 
     users.findOne({ _id: mongoose.Types.ObjectId(userId), "streams": mongoose.Types.ObjectId(streamId) }).exec((err, docs) => { // 
         if (err) {
+            connection.close()
             res.sendStatus(500)
         } else {
             if (docs) {
+                connection.close()
                 res.sendStatus(302)
             } else {
                 // findOneAndUpdate --> findAndModify --> update
                 users.update({ _id: mongoose.Types.ObjectId(userId)}, { $push: { 'streams': mongoose.Types.ObjectId(streamId) }}).exec((err, docs) => {
                     if (err) {
+                        connection.close()
                         res.sendStatus(500)
                     } else {
+                        connection.close()
                         res.sendStatus(200)
                     }
                 })
@@ -272,11 +305,14 @@ router.get('/:id/subscribeinfo', (req, res) => {
         ]        
     ).exec((err, docs) => {
         if (err) {
+            connection.close()
             res.sendStatus(500)
         } else {
             if (docs.length === 0) {
+                connection.close()
                 res.sendStatus(404)
             } else {
+                connection.close()
                 res.status(200).send({ ... docs[0] })
             }
         }
@@ -324,11 +360,14 @@ router.get('/:id/subscribewarning', (req, res) => {
         ]        
     ).exec((err, docs) => {
         if (err) {
+            connection.close()
             res.sendStatus(500)
         } else {
             if (docs.length === 0) {
+                connection.close()
                 res.sendStatus(404)
             } else {
+                connection.close()
                 res.status(200).send({ ... docs[0] })
             }
         }

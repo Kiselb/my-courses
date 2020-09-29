@@ -15,6 +15,7 @@ router.get('/', (req, res) => {
             if (err) {
                 res.sendStatus(500)
             } else {
+                connection.close()
                 res.status(200).send(docs.map(doc => ({ Name: doc.Name, EMail: doc.EMail })));
             }
         })

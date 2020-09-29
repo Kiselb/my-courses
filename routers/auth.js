@@ -23,7 +23,9 @@ exports.login = async (name, password) => {
             expiresIn: 480000000,
             subject: '' + userId._id
         })
+        connection.close()
         return ({ token: token, userId: '' + userId._id })
     }
+    connection.close()
     return null
 }
