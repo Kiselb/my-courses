@@ -82,7 +82,7 @@ html
         .dialog-course-add-stream-actions
           button(onclick='mycourses.courses.addStream.OK()') OK
           button(onclick='mycourses.courses.addStream.Cancel()') Отмена
-    #change-stream.dialog-stream-change.dialog-hide.dialog-hide()
+    #change-stream.dialog-stream-change.dialog-hide()
       div
         .dialog-course-add-stream-header Изменение потока курса
         p.dialog-stream-change-params
@@ -96,3 +96,17 @@ html
         .dialog-stream-change-actions
           button(onclick='mycourses.streams.changeStream.OK()') OK
           button(onclick='mycourses.streams.changeStream.Cancel()') Отмена
+    #change-stream-lesson.dialog-stream-change.dialog-hide()
+      div
+        .dialog-course-add-stream-header Изменение даты проведения лекции
+        p.dialog-stream-change-params
+          label.dialog-stream-change-date-label
+            | Дата лекции:
+          input#dialog-stream-change-start(type="date").dialog-stream-change-date
+        p.dialog-stream-change-params
+          label.dialog-stream-change-date-label
+            | Время лекции:
+          input#dialog-stream-change-finish(type="time").dialog-stream-change-date
+        .dialog-stream-change-actions
+          button(onclick='mycourses.streams.changeLesson.OK()') OK
+          button(onclick='mycourses.streams.changeLesson.Cancel()') Отмена

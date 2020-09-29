@@ -18,8 +18,8 @@ block panel
                     .list-item-text Дата и время проведения: &lt;Не задано&gt;
                 else
                     .list-item-text Дата и время проведения: #{new Intl.DateTimeFormat('de-DE', { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" }).format(new Date(lesson.DueDate))}
-                a.list-item-action-first(href='' onclick='mycourses.streams.remLesson("' + _id + '", ' + orderNumber + ')') Удалить
-                a.list-item-action-next(href='' onclick='mycourses.streams.changeLesson("' + _id + '", ' + orderNumber + ')') Изменить
+                span.list-item-action-first(onclick='mycourses.streams.remLesson("' + _id + '", ' + orderNumber + ')') Удалить
+                a.list-item-action-next(href='' onclick='mycourses.streams.changeLesson.Dialog("' + _id + '", ' + orderNumber + ')') Изменить
                 a.list-item-action-next(href=materialsLink) Материалы   
                 - orderNumber = orderNumber + 1
                 br

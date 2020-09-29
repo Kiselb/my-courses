@@ -162,7 +162,7 @@ router.delete('/:id/lessons/:num', (req, res) => {
                             if (err) {
                                 res.sendStatus(500)
                             } else {
-                                res.sendStatus(204)
+                                res.sendStatus(200)
                             }
                         })
                     }

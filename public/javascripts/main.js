@@ -54,6 +54,12 @@ var mycourses = (function() {
             dialog.classList.remove('dialog-hide');
             return;
         }
+        id = localStorage.getItem('mycourses.stream.changeLesson')
+        if (!!id) {
+            const dialog = document.getElementById('change-stream-lesson');
+            dialog.classList.remove('dialog-hide');
+            return;
+        }
     }
     var login = function() {
         const name = document.getElementById('name').value;
@@ -323,16 +329,27 @@ var mycourses = (function() {
         localStorage.removeItem('mycourses.stream.addLesson');
         window.location.href = 'http://127.0.0.1:5000/streams/' + streamId;
     }
-    var streamChangeLesson = function(streamId, lessonNum) {
-        console.log("Stream Lesson Changed");
+    var streamChangeLessonDialog = function(streamId, lessonNum) {
+        const dialog = document.getElementById('change-stream-lesson');
+        localStorage.setItem('mycourses.stream.changeLesson', streamId + '@' + lessonNum);
+    }
+    var streamChangeLessonOK = function() {
+    }
+    var streamChangeLessonCancel = function() {
+        localStorage.removeItem('mycourses.stream.changeLesson');
+        window.location.reload(true);
     }
     var streamRemLesson = function(streamId, lesson) {
+        if (!!localStorage.getItem('mycourses.stream.remLesson')) return;
+        localStorage.setItem('mycourses.stream.remLesson', streamId + '@' + lesson)
         const request = new XMLHttpRequest();
         request.open('DELETE', "http://127.0.0.1:5000/streams/" + streamId + "/lessons/" + lesson);
         request.setRequestHeader('Content-Type', 'application/json');
         request.addEventListener("readystatechange", () => {
-            if (request.readyState === 4 && request.status === 204) {
-                window.location.href = 'http://127.0.0.1:5000/streams/' + streamId;
+            if (request.readyState === 4 && request.status === 200) {
+                //window.location.href = 'http://127.0.0.1:5000/streams/' + streamId;
+                window.location.reload(true);
+                localStorage.removeItem('mycourses.stream.remLesson');
             }
         });
         request.send(JSON.stringify({}));
@@ -412,7 +429,11 @@ var mycourses = (function() {
                 OK: streamAddLessonOK,
                 Cancel: streamAddLessonCancel
             },
-            changeLesson: streamChangeLesson,
+            changeLesson: {
+                Dialog: streamChangeLessonDialog,
+                OK: streamChangeLessonOK,
+                Cancel: streamChangeLessonCancel
+            },
             remLesson : streamRemLesson,
             changeStream: {
                 Dialog: changeStreamDialog,
