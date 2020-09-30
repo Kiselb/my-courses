@@ -25,30 +25,30 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     const userId =  req.mycoursesUserId
     const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true})
-    const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string', Lessons: 'array' })
-    const courses = connection.model('courses', schemaCourses)
+    // const schemaCourses = new mongoose.Schema({ Name: 'string', State: 'string', Description: 'string', Lessons: 'array' })
+    // const courses = connection.model('courses', schemaCourses)
 
     const courseId = mongoose.Types.ObjectId()
 
-    courses.aggregate([
-        { $project: {
+    connection.collection('courses').insert(
+        {
             _id: courseId,
             Name: req.body.name,
             State: 'Draft',
             Owner: mongoose.Types.ObjectId(userId),
             Description: req.body.description,
             Lessons: []
-        }},
-        { $merge: { into: 'courses', whenMatched: 'replace' }}
-    ]).exec((err, docs) => {
-        if (err) {
-            connection.close()
-            res.sendStatus(500)
-        } else {
-            connection.close()
-            res.status(200).send({ courseId: courseId })
+        }, (err, docs) => {
+            if (err) {
+                console.log(err)
+                connection.close()
+                res.sendStatus(500)
+            } else {
+                connection.close()
+                res.status(200).send({ courseId: courseId })
+            }
         }
-    })
+    )
 })
 router.get('/:id', (req, res) => {
     const userId =  req.mycoursesUserId
@@ -89,6 +89,7 @@ router.put('/:id', (req, res) => {
             connection.close()
             res.sendStatus(500)
         } else {
+            console.log(docs, DB_PATH)
             connection.close()
             res.status(200).send({ courseId: courseId })
         }
