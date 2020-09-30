@@ -4,7 +4,9 @@
   "description": "Данное приложение является учебным и разрабатывается в рамках курса Разработчик Node.js образовательной компании [OTUS](https://otus.ru/).",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "api": "node api.js",
+    "fe": "node index.js"
   },
   "repository": {
     "type": "git",

@@ -1,8 +1,14 @@
 const auth = require('./auth');
 
-test('login works', async (done) => {
-    //expect.assertions(1);
-    const token = await auth.login("Ivan Ivanov", "12345");
-    expect(!!token.token).toBe(true);
-    done();
-});
+describe('authentication logic', () => {
+    it('authentication success', async () => {
+        expect.assertions(1);
+        const token = await auth.login("Ivan Ivanov", "12345");
+        expect(token).toBeTruthy();
+    });
+    it('authentication failed', async () => {
+        expect.assertions(1);
+        const token = await auth.login("Ivan Ivanov", "");
+        expect(token).toBeFalsy();
+    });        
+})
