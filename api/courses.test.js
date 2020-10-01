@@ -69,16 +69,66 @@ describe('api create course', () => {
         .catch(error => done(error))
     });
     it('create course data', async (done) => {
-        const random = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-        axios.post(`${API_PATH}/courses`, { name: "Вводный курс Data Science (CREATE)", description: random }, { headers: { 'Authorization': token }})
+        const randomName = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+        const randomDescription = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+        axios.post(`${API_PATH}/courses`, { name: randomName, description: randomDescription }, { headers: { 'Authorization': token }})
         .then(response => {
             axios.get(`${API_PATH}/courses/${response.data.courseId}`, { headers: { 'Authorization': token }})
             .then(response => {
-                expect(response.data.Description).toBe(random)
+                expect(response.data.Name).toBe(randomName)
+                expect(response.data.Description).toBe(randomDescription)
                 done()
             })
             .catch(error => done(error))
         })
         .catch(error => done(error))
     })
+})
+describe('api course streams', () => {
+    it('get course streams status', async (done) => {
+        axios.get(`${API_PATH}/courses/5f451c68a720b75ec4062eb8/streams`, { headers: { 'Authorization': token }})
+        .then(response => {
+            expect(response.status).toBe(200)
+            done()
+        })
+        .catch(error => done(error))
+    })
+    it('get course streams data', async (done) => {
+        axios.get(`${API_PATH}/courses/5f451c68a720b75ec4062eb8/streams`, { headers: { 'Authorization': token }})
+        .then(response => {
+            expect(response.data.streams.length).toBeGreaterThan(0)
+            done()
+        })
+        .catch(error => done(error))
+    })
+    it('get course streams data structure', async (done) => {
+        axios.get(`${API_PATH}/courses/5f451c68a720b75ec4062eb8/streams`, { headers: { 'Authorization': token }})
+        .then(response => {
+            expect(response.data.streams[0]).toEqual(
+                expect.objectContaining({
+                    _id: expect.any(String),
+                    Name: expect.any(String),
+                    Owner: expect.any(String),
+                    Course: expect.any(String),
+                    State: expect.any(String),
+                    StateInfo: expect.any(String),
+                    Start: expect.any(String),
+                    Finish: expect.any(String),
+                    Lessons: expect.any(Array)
+                })
+            )
+            done()
+        })
+        .catch(error => done(error))
+    })
+})
+describe('api create streams', () => {
+    it('create stream status', async (done) => {
+        axios.post(`${API_PATH}/courses/5f748b243e5d5927d6c59857/streams`, { start: new Date(), finish: new Date() }, { headers: { 'Authorization': token }})
+        .then(response => {
+            expect(response.status).toBe(200)
+            done()
+        })
+        .catch(error => done(error))
+    });
 })

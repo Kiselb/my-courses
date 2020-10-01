@@ -42,6 +42,11 @@ exports.addStreamLesson = function(req, res) {
     .then(response => res.sendStatus(200))
     .catch(error => res.sendStatus((error.response.status === 401)? 401 : 500))
 }
+exports.changeStreamLesson = function(req, res) {
+    axios.put(`${API_PATH}/streams/${req.params.id}/lessons/${req.params.num}`, req.body, { headers: { 'Authorization': req.mycoursestoken }})
+    .then(response => res.sendStatus(200))
+    .catch(error => res.sendStatus((error.response.status === 401)? 401 : 500))
+}
 exports.remStreamLesson = function(req, res) {
     axios.delete(`${API_PATH}/streams/${req.params.id}/lessons/${req.params.num}`, { headers: { 'Authorization': req.mycoursestoken }})
     .then(response => res.sendStatus(200))

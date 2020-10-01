@@ -160,6 +160,39 @@ router.post('/:id/lessons', (req, res) => {
         }
     })
 })
+router.put('/:id/lessons/:num', (req, res) => {
+    const streamId = req.params.id
+    const lessonNo = req.params.num
+    const connection = mongoose.createConnection(DB_PATH, {useNewUrlParser: true, useFindAndModify: false})
+    const schemaStreams = new mongoose.Schema({ Name: 'string', State: 'string', StateInfo: 'string', Start: 'date', Finish: 'date', Lessons: 'array' })
+    const streams = connection.model('streams', schemaStreams)
+    streams.findOne({ _id: mongoose.Types.ObjectId(streamId) }).exec((err, docs) => {
+        if (err) {
+            connection.close()
+            res.sendStatus(500)
+        } else {
+            if (!docs) {
+                connection.close()
+                res.sendStatus(404)
+            } else {
+                const set = {}
+                set['Lessons.' + (+lessonNo - 1) + '.DueDate'] = req.body.dueDate
+                streams.findOneAndUpdate(
+                    { _id: mongoose.Types.ObjectId(streamId) },
+                    { $set: set }
+                    ).exec((err, docs) => {
+                    if (err) {
+                        connection.close()
+                        res.sendStatus(500)
+                    } else {
+                        connection.close()
+                        res.sendStatus(200)
+                    }
+                })
+            }
+        }
+    })
+})
 router.delete('/:id/lessons/:num', (req, res) => {
     const streamId = req.params.id
     const lessonNo = req.params.num

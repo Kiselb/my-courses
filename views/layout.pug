@@ -102,11 +102,11 @@ html
         p.dialog-stream-change-params
           label.dialog-stream-change-date-label
             | Дата лекции:
-          input#dialog-stream-change-start(type="date").dialog-stream-change-date
+          input#dialog-stream-change-lesson-date(type="date").dialog-stream-change-date
         p.dialog-stream-change-params
           label.dialog-stream-change-date-label
             | Время лекции:
-          input#dialog-stream-change-finish(type="time").dialog-stream-change-date
+          input#dialog-stream-change-lesson-time(type="time").dialog-stream-change-date
         .dialog-stream-change-actions
           button(onclick='mycourses.streams.changeLesson.OK()') OK
           button(onclick='mycourses.streams.changeLesson.Cancel()') Отмена

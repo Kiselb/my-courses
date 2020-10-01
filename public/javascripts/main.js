@@ -334,6 +334,31 @@ var mycourses = (function() {
         localStorage.setItem('mycourses.stream.changeLesson', streamId + '@' + lessonNum);
     }
     var streamChangeLessonOK = function() {
+        if (!localStorage.getItem('mycourses.stream.changeLesson')) return;
+        const streamId = localStorage.getItem('mycourses.stream.changeLesson').split('@')[0];
+        const lesson = localStorage.getItem('mycourses.stream.changeLesson').split('@')[1];
+        if (!streamId || !lesson) {
+            localStorage.removeItem('mycourses.stream.changeLesson');
+            return
+        }
+        const request = new XMLHttpRequest();
+        request.open('PUT', "http://127.0.0.1:5000/streams/" + streamId + "/lessons/" + lesson);
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.addEventListener("readystatechange", () => {
+            if (request.readyState === 4 && request.status === 200) {
+                //window.location.href = 'http://127.0.0.1:5000/streams/' + streamId;
+                window.location.reload(true);
+                localStorage.removeItem('mycourses.stream.changeLesson');
+            }
+        });
+        const date = document.getElementById("dialog-stream-change-lesson-date").value;
+        const time = document.getElementById("dialog-stream-change-lesson-time").value;
+        if (!date || !time) {
+            return;
+        }
+        const dueDate = new Date(date + " " + time);
+        console.log("DueDate", dueDate, date, time);
+        request.send(JSON.stringify({ dueDate: dueDate}));
     }
     var streamChangeLessonCancel = function() {
         localStorage.removeItem('mycourses.stream.changeLesson');

@@ -36,6 +36,9 @@ router.get('/:id/lessons', (req, res) => {
 router.post('/:id/lessons', (req, res) => {
     controllers.addStreamLesson(req, res)
 })
+router.put('/:id/lessons/:num', (req, res) => {
+    controllers.changeStreamLesson(req, res)
+})
 router.delete('/:id/lessons/:num', (req, res) => {
     controllers.remStreamLesson(req, res)
 })
