@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest",
     "api": "node api.js",
-    "fe": "node index.js"
+    "fe": "node index.js",
+    "api-dev": "nodemon api.js",
+    "fe-dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
